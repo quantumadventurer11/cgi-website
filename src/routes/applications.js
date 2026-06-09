@@ -55,7 +55,7 @@ router.post("/", applicationLimit, validateBody(applicationSchema), async (req, 
       status: "new"
     };
 
-    insertApplication.run(row);
+    await insertApplication(row);
     await sendApplicationEmails(application);
 
     return res.status(201).json({ ok: true });

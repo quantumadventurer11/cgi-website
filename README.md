@@ -6,7 +6,7 @@ Production-grade website and membership application backend for the Celestial Go
 
 - Polished single-page public website with generated WebP background assets, scroll animation, reduced-motion support, and responsive team profiles.
 - Node.js + Express API for membership applications.
-- SQLite persistence through `better-sqlite3`.
+- Durable Neon Postgres support for Vercel, with SQLite persistence through `better-sqlite3` for local development and Docker.
 - Nodemailer notification and applicant confirmation emails, with console fallback in development.
 - Protected admin API and branded admin interface at `/admin.html`.
 - Docker, Docker Compose, GitHub Actions CI, and automated backend tests.
@@ -37,6 +37,7 @@ Copy `.env.example` to `.env` and set:
 - `PORT`: HTTP port, default `3000`.
 - `NODE_ENV`: use `development` locally and `production` in deployment.
 - `ADMIN_TOKEN`: long random secret for admin API access.
+- `DATABASE_URL` or `POSTGRES_URL`: Neon Postgres connection string for Vercel production. Leave unset locally to use SQLite.
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`: SMTP credentials.
 - `MAIL_FROM`: sender identity, default `CGI Website <no-reply@dfh.org.il>`.
 - `MAIL_TO`: application notification recipient, default `cgi@dfh.org.il`.
@@ -66,6 +67,30 @@ SQLite data is persisted in the `cgi-data` Docker volume mounted at `/app/data`.
 ## Deployment
 
 Deploy the container behind Nginx, Caddy, Traefik, or a platform-managed TLS proxy. A typical VPS deployment points a subdomain such as `cgi.dfh.org.il` to the host, terminates TLS at the reverse proxy, and forwards traffic to port `3000`.
+
+### Vercel + Neon
+
+This repository includes `vercel.json` and `api/index.js` so Vercel can serve `public/` through its CDN and run the Express API as a Vercel Function.
+
+```bash
+npx vercel install neon
+npx vercel env add ADMIN_TOKEN production
+npx vercel env add NODE_ENV production
+npx vercel env add MAIL_TO production
+npx vercel env add MAIL_FROM production
+npx vercel --prod
+```
+
+Recommended Vercel environment variables:
+
+- `DATABASE_URL` or `POSTGRES_URL`, provided by the Neon Marketplace integration.
+- `NODE_ENV=production`
+- `ADMIN_TOKEN=<long random string>`
+- `MAIL_TO=cgi@dfh.org.il`
+- `MAIL_FROM=CGI Website <no-reply@dfh.org.il>`
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` when production mail credentials are ready
+
+The app automatically uses Neon when `DATABASE_URL` or `POSTGRES_URL` is present. If neither is present, it falls back to SQLite locally and to temporary `/tmp` SQLite on Vercel; that temporary Vercel fallback is useful for smoke testing but not durable production storage.
 
 ### Render
 

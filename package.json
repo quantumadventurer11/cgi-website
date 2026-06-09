@@ -17,9 +17,10 @@
   "author": "Celestial Governance Initiative",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=20"
+    "node": ">=20 <25"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "better-sqlite3": "^11.8.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

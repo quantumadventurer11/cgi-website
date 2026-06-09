@@ -14,35 +14,45 @@ const statusSchema = z.object({
 
 router.use(requireAdmin);
 
-router.get("/applications", (req, res) => {
-  return res.json({
-    ok: true,
-    applications: listApplications.all()
-  });
+router.get("/applications", async (req, res, next) => {
+  try {
+    const applications = await listApplications();
+
+    return res.json({
+      ok: true,
+      applications
+    });
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.patch("/applications/:id", validateBody(statusSchema), (req, res) => {
-  const id = Number(req.params.id);
+router.patch("/applications/:id", validateBody(statusSchema), async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
 
-  if (!Number.isInteger(id) || id < 1) {
-    return res.status(400).json({
-      ok: false,
-      error: "Invalid application id."
+    if (!Number.isInteger(id) || id < 1) {
+      return res.status(400).json({
+        ok: false,
+        error: "Invalid application id."
+      });
+    }
+
+    const result = await updateApplicationStatus({ id, status: req.validatedBody.status });
+    if (result.changes === 0) {
+      return res.status(404).json({
+        ok: false,
+        error: "Application not found."
+      });
+    }
+
+    return res.json({
+      ok: true,
+      application: await getApplication(id)
     });
+  } catch (error) {
+    return next(error);
   }
-
-  const result = updateApplicationStatus.run({ id, status: req.validatedBody.status });
-  if (result.changes === 0) {
-    return res.status(404).json({
-      ok: false,
-      error: "Application not found."
-    });
-  }
-
-  return res.json({
-    ok: true,
-    application: getApplication.get(id)
-  });
 });
 
 module.exports = router;
