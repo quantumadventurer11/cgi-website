@@ -1,0 +1,14 @@
+services:
+  cgi-website:
+    build: .
+    container_name: cgi-website
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-3000}:3000"
+    volumes:
+      - cgi-data:/app/data
+
+volumes:
+  cgi-data:
