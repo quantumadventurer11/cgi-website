@@ -75,10 +75,14 @@
         const y = (event.clientY - rect.top) / rect.height - 0.5;
         card.style.setProperty("--tilt-x", `${(-y * 4).toFixed(2)}deg`);
         card.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+        card.style.setProperty("--pointer-x", `${((x + 0.5) * 100).toFixed(1)}%`);
+        card.style.setProperty("--pointer-y", `${((y + 0.5) * 100).toFixed(1)}%`);
       });
       card.addEventListener("pointerleave", () => {
         card.style.setProperty("--tilt-x", "0deg");
         card.style.setProperty("--tilt-y", "0deg");
+        card.style.setProperty("--pointer-x", "50%");
+        card.style.setProperty("--pointer-y", "35%");
       });
     });
   }
