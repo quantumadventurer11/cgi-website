@@ -41,6 +41,19 @@ body {
   line-height: 1.7;
 }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-hover));
+  box-shadow: 0 0 18px rgba(201, 162, 39, 0.55);
+}
+
 a {
   color: inherit;
 }
@@ -144,7 +157,20 @@ textarea {
   text-decoration: none;
   font-weight: 600;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.nav-cta::after,
+.button::after {
+  content: "";
+  position: absolute;
+  inset: -40% auto -40% -70%;
+  width: 55%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+  transition: left 520ms ease;
 }
 
 .nav-cta,
@@ -169,10 +195,23 @@ textarea {
   transform: translateY(-2px);
 }
 
+.nav-cta:hover::after,
+.nav-cta:focus-visible::after,
+.button:hover::after,
+.button:focus-visible::after {
+  left: 120%;
+}
+
 .section,
 .hero {
   position: relative;
   padding: var(--space-8) max(var(--space-5), calc((100vw - var(--max-width)) / 2));
+  overflow: hidden;
+}
+
+.section > *:not(.section-image) {
+  position: relative;
+  z-index: 1;
 }
 
 .section-dark {
@@ -188,11 +227,112 @@ textarea {
   background: linear-gradient(180deg, var(--color-depth), var(--color-navy));
 }
 
+.hero-backdrop,
+.section-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+}
+
+.hero-backdrop {
+  background-image:
+    linear-gradient(180deg, rgba(6, 18, 46, 0.36), rgba(6, 18, 46, 0.88)),
+    radial-gradient(circle at 50% 52%, rgba(201, 162, 39, 0.16), transparent 42%),
+    url("/assets/hero-celestial-governance.webp");
+  transform: scale(1.03);
+  animation: image-drift 28s ease-in-out infinite alternate;
+}
+
 .starfield {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
+  opacity: 0.58;
+  mix-blend-mode: screen;
+}
+
+.constellation-rail {
+  position: absolute;
+  z-index: 2;
+  inset: 16% max(1rem, calc((100vw - var(--max-width)) / 2)) auto auto;
+  width: min(34vw, 360px);
+  height: 220px;
+  opacity: 0.75;
+}
+
+.constellation-rail::before,
+.constellation-rail::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.7), transparent);
+  transform-origin: left center;
+  animation: line-scan 6s ease-in-out infinite;
+}
+
+.constellation-rail::before {
+  top: 42px;
+  left: 18px;
+  width: 74%;
+  transform: rotate(16deg);
+}
+
+.constellation-rail::after {
+  top: 136px;
+  left: 44px;
+  width: 52%;
+  transform: rotate(-28deg);
+  animation-delay: 1.2s;
+}
+
+.constellation-rail span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.24);
+  box-shadow: 0 0 18px rgba(201, 162, 39, 0.55);
+  animation: star-pulse 3.6s ease-in-out infinite;
+}
+
+.constellation-rail span:nth-child(1) { top: 28px; left: 12px; }
+.constellation-rail span:nth-child(2) { top: 72px; left: 46%; animation-delay: 0.6s; }
+.constellation-rail span:nth-child(3) { top: 122px; left: 28%; animation-delay: 1.1s; }
+.constellation-rail span:nth-child(4) { top: 166px; right: 16%; animation-delay: 1.7s; }
+
+.section-image {
+  opacity: 0.3;
+}
+
+.section-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(6, 18, 46, 0.88), rgba(10, 26, 63, 0.82)),
+    radial-gradient(circle at 70% 20%, rgba(201, 162, 39, 0.14), transparent 34%);
+}
+
+.section-image-projects {
+  background-image: url("/assets/projects-research-field.webp");
+  opacity: 0.42;
+  background-attachment: fixed;
+}
+
+.section-image-origins {
+  background-image: url("/assets/origins-space-law.webp");
+  opacity: 0.34;
+}
+
+.section-image-join {
+  background-image: url("/assets/join-research-forum.webp");
+  opacity: 0.42;
 }
 
 .hero-content {
@@ -339,6 +479,10 @@ p {
   box-shadow: 0 22px 70px rgba(10, 26, 63, 0.18);
 }
 
+.profile-card:hover {
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-4px);
+}
+
 .goal-index,
 .project-code,
 .status-tag,
@@ -375,6 +519,7 @@ p {
   color: var(--color-gold);
   padding: 0.35rem 0.7rem;
   font-size: 0.75rem;
+  animation: status-breathe 3.4s ease-in-out infinite;
 }
 
 .node-list {
@@ -421,6 +566,49 @@ p {
 .member-card {
   display: grid;
   gap: var(--space-3);
+}
+
+.profile-card {
+  align-content: start;
+  min-height: 100%;
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(0);
+  will-change: transform;
+}
+
+.member-head {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.member-role {
+  color: #4D5B7D;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.profile-card details {
+  border-top: 1px solid rgba(201, 162, 39, 0.25);
+  padding-top: var(--space-3);
+}
+
+.profile-card summary {
+  color: var(--color-gold);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.profile-card summary::marker {
+  color: var(--color-gold);
+}
+
+.profile-card details[open] summary {
+  margin-bottom: var(--space-3);
+}
+
+.profile-card details p {
+  color: #37476B;
 }
 
 .member-card p {
@@ -480,7 +668,22 @@ p {
 }
 
 .join-section {
-  background: linear-gradient(180deg, #fffaf0, var(--color-text));
+  color: var(--color-text);
+  overflow: hidden;
+  background: var(--color-depth);
+}
+
+.join-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(90deg, rgba(6, 18, 46, 0.94), rgba(6, 18, 46, 0.64));
+}
+
+.join-copy p {
+  color: var(--color-muted);
 }
 
 .application-form {
@@ -524,10 +727,13 @@ textarea:focus {
 
 .honeypot {
   position: absolute;
-  left: -100vw;
   width: 1px;
   height: 1px;
+  margin: -1px;
   overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .form-status {
@@ -623,6 +829,29 @@ textarea:focus {
   vertical-align: top;
 }
 
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  border: 1px solid rgba(201, 162, 39, 0.32);
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  color: var(--color-depth);
+  background: rgba(201, 162, 39, 0.14);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.admin-table select {
+  min-width: 128px;
+}
+
+.admin-card-list {
+  display: none;
+}
+
 .admin-table th {
   color: var(--color-depth);
   font-family: var(--font-mono);
@@ -639,6 +868,46 @@ textarea:focus {
   50% {
     opacity: 1;
     transform: translate(-50%, 8px) rotate(45deg);
+  }
+}
+
+@keyframes image-drift {
+  from {
+    transform: scale(1.03) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.4%, 1%, 0);
+  }
+}
+
+@keyframes line-scan {
+  0%, 100% {
+    opacity: 0.2;
+    clip-path: inset(0 100% 0 0);
+  }
+  45%, 75% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes star-pulse {
+  0%, 100% {
+    transform: scale(0.88);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+}
+
+@keyframes status-breathe {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(201, 162, 39, 0);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(201, 162, 39, 0.18);
   }
 }
 
@@ -662,9 +931,12 @@ textarea:focus {
     align-items: start;
   }
 
-  .goal-grid,
-  .team-grid {
+  .goal-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .project-list {
@@ -687,6 +959,46 @@ textarea:focus {
   }
 }
 
+@media (max-width: 720px) {
+  .admin-table {
+    min-width: 0;
+  }
+
+  .admin-table thead {
+    display: none;
+  }
+
+  .admin-table,
+  .admin-table tbody,
+  .admin-table tr,
+  .admin-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-table tr {
+    border: 1px solid rgba(10, 26, 63, 0.14);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    padding: var(--space-3);
+  }
+
+  .admin-table td {
+    border-bottom: 0;
+    padding: var(--space-2) 0;
+  }
+
+  .admin-table td::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--color-depth);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -700,5 +1012,17 @@ textarea:focus {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-backdrop,
+  .constellation-rail::before,
+  .constellation-rail::after,
+  .constellation-rail span,
+  .status-tag {
+    animation: none !important;
+  }
+
+  .profile-card {
+    transform: none !important;
   }
 }

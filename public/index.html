@@ -12,6 +12,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
 
   <header class="site-header" data-header>
     <nav class="nav-shell" aria-label="Primary navigation">
@@ -39,7 +40,11 @@
 
   <main id="main">
     <section id="hero" class="hero section-dark">
+      <div class="hero-backdrop" aria-hidden="true"></div>
       <canvas class="starfield" data-starfield aria-hidden="true"></canvas>
+      <div class="constellation-rail" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
       <div class="hero-content reveal">
         <p class="eyebrow">Under the Democracy and Federalism Hub · Affiliated with SGAC</p>
         <h1>Celestial Governance Initiative</h1>
@@ -98,12 +103,13 @@
     </section>
 
     <section id="projects" class="section section-dark projects-section">
+      <div class="section-image section-image-projects" aria-hidden="true"></div>
       <div class="section-heading reveal">
         <p class="section-kicker">Current Projects</p>
         <h2>Research pathways from treaty analysis to lunar administration.</h2>
       </div>
       <div class="project-list">
-        <article class="project-block reveal">
+        <article class="project-block reveal" data-tilt-card>
           <div class="project-meta">
             <span class="project-code">OSTGAP</span>
             <span class="status-tag">Status: Manuscript Delivered</span>
@@ -111,7 +117,7 @@
           <h3>Outer Space Treaty Gap Analysis Project</h3>
           <p>A seven-section, peer-reviewed paper analyzing gaps in the Outer Space Treaty across three phases: Phase 1, textual gap analysis of the treaty articles; Phase 2, comparative national legislation analysis of major spacefaring jurisdictions; Phase 3, a policy recommendations framework. Targets COPUOS submission and academic-journal publication. It examines the three articles under greatest interpretative stress — Article II (non-appropriation), Article VI (state responsibility and continuing supervision), and Article IX (harmful interference) — and advances a codification-first reform pathway grounded in the hardening of customary international law.</p>
         </article>
-        <article class="project-block reveal">
+        <article class="project-block reveal" data-tilt-card>
           <div class="project-meta">
             <span class="project-code">CGI-LUN-2026-001</span>
             <span class="status-tag">Status: Phase 1, Active</span>
@@ -150,20 +156,101 @@
     <section id="team" class="section team-section">
       <div class="section-heading reveal">
         <p class="section-kicker">Steering Committee</p>
-        <h2>A multidisciplinary, international team.</h2>
+        <h2>Research leadership across law, policy, economics, and science.</h2>
       </div>
-      <div class="team-grid">
-        <article class="member-card reveal"><span class="avatar">BB</span><h3>Benjamin Charles Brumm</h3><p>Founder, Programme Lead & Secretary of the Steering Committee</p></article>
-        <article class="member-card reveal"><span class="avatar">CB</span><h3>Charles Bird</h3><p>Steering Committee Chair; lecturer at Charles University Prague; J.D. (Washburn), LL.M. (Kent); Missouri bar</p></article>
-        <article class="member-card reveal"><span class="avatar">PR</span><h3>Prranav</h3><p>Vice Chair; fourth-year medical student</p></article>
-        <article class="member-card reveal"><span class="avatar">AP</span><h3>Asher Patel</h3><p>Head of Economics & Resource Utilization; Brown University</p></article>
-        <article class="member-card reveal"><span class="avatar">AI</span><h3>Amara Audrey Isikaku</h3><p>Article XIII Lead; African Union jurisdictional analysis</p></article>
-        <article class="member-card reveal"><span class="avatar">KU</span><h3>Khanak Upadhyay</h3><p>UAE Jurisdictional Lead</p></article>
-        <article class="member-card reveal"><span class="avatar">AB</span><h3>Abdullah</h3><p>Social Media Lead</p></article>
+      <div class="team-grid team-profile-grid">
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">BB</span>
+            <div>
+              <h3>Benjamin C. Brümm</h3>
+              <p class="member-role">Founder, Programme Lead & Secretary of the Steering Committee</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Benjamin is a governance and policy researcher based in Halifax, Nova Scotia. He leads CGI's OST Gap Analysis Project (OST-GA-26), coordinating research on treaty gaps, property rights, and jurisdictional frameworks for extraterrestrial environments, including the drafting of a Provisional Charter for the Martian Federation. He is completing a B.Applied Computer Science at Dalhousie University and a Diploma in Data Analytics at NSCC, and serves as a member of the Space Law and Policy Project Group at SGAC and board member of the World Federalist Movement.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">CB</span>
+            <div>
+              <h3>Charles Bird</h3>
+              <p class="member-role">Steering Committee Chair</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Charles is a lecturer at Charles University Faculty of Law in Prague, where he teaches Equity and Trusts, Criminal Law, and Legal English. He is a Ph.D. candidate with a dissertation on the legal framework governing property and resource rights on celestial bodies. His research centres on the Outer Space Treaty, commercial space activities, and emerging space resource law. He holds a J.D. from Washburn University School of Law and an LL.M. from the University of Kent, and is admitted to practice law in the State of Missouri.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">PI</span>
+            <div>
+              <h3>Prranav (Ivar)</h3>
+              <p class="member-role">Vice Chair</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Prranav, also known as Ivar, is a fourth-year medical student currently serving as Vice Chair of the Celestial Governance Initiative. His research interests span global health, policy, and geopolitics, with a focus on how systems of governance shape access, equity, and outcomes in complex and resource-constrained environments. At CGI he contributes to the Phase 1 gap analysis and co-leads the Article IX and VII assessments on planetary protection and liability.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">AP</span>
+            <div>
+              <h3>Asher Patel</h3>
+              <p class="member-role">Head of Economics and Resource Utilization</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Asher is an undergraduate at Brown University studying applied mathematics-economics and international security. At CGI he leads the economics and resource utilization portfolio, bringing quantitative and policy analysis to the Initiative's work on space resource governance, incentive structures for private investment, and the economic dimensions of OST modernization. He holds an additional research interest in international law compliance.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">AI</span>
+            <div>
+              <h3>Amara Audrey Isikaku</h3>
+              <p class="member-role">Researcher & Article XIII Lead</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Amara Audrey Isikaku is a student with a strong interest in space law, governance, and space technology systems. Her work involves analyzing the Outer Space Treaty alongside the technical systems that enable space activities. She joined the Celestial Governance Initiative to explore how law and technology intersect to shape equitable, sustainable, and collaborative space development. At CGI she serves as lead analyst for Article XIII of the OST and heads the African Union jurisdictional review in Phase 2 of the OST Gap Analysis Project.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">KU</span>
+            <div>
+              <h3>Khanak Upadhyay</h3>
+              <p class="member-role">Researcher & UAE Jurisdictional Lead</p>
+            </div>
+          </div>
+          <details>
+            <summary>Read introduction</summary>
+            <p>Khanak Upadhyay is a policy and research enthusiast with interests in governance, public policy, sustainability, and emerging global challenges. She actively engages in research and policy dialogue, contributing to discussions on evidence-based solutions and responsible governance. Khanak has participated in the World Bank Group Youth Summit and served as a Harvard delegate, engaging with global policy conversations and interdisciplinary research initiatives. At CGI she serves as jurisdictional lead for the UAE analysis in Phase 2 of the OST Gap Analysis Project.</p>
+          </details>
+        </article>
+        <article class="member-card profile-card reveal" data-tilt-card>
+          <div class="member-head">
+            <span class="avatar">AB</span>
+            <div>
+              <h3>Abdullah</h3>
+              <p class="member-role">Social Media Lead</p>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="origins" class="section section-dark origins-section">
+      <div class="section-image section-image-origins" aria-hidden="true"></div>
       <div class="origins-layout">
         <div class="reveal">
           <p class="section-kicker">Origins</p>
@@ -179,6 +266,7 @@
     </section>
 
     <section id="join" class="section join-section">
+      <div class="section-image section-image-join" aria-hidden="true"></div>
       <div class="join-layout">
         <div class="join-copy reveal">
           <p class="section-kicker">Join / Apply</p>

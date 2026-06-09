@@ -2,6 +2,15 @@
 
 Production-grade website and membership application backend for the Celestial Governance Initiative (CGI), under the Democracy and Federalism Hub and affiliated with the Space Generation Advisory Council.
 
+## What Is Included
+
+- Polished single-page public website with generated WebP background assets, scroll animation, reduced-motion support, and responsive team profiles.
+- Node.js + Express API for membership applications.
+- SQLite persistence through `better-sqlite3`.
+- Nodemailer notification and applicant confirmation emails, with console fallback in development.
+- Protected admin API and branded admin interface at `/admin.html`.
+- Docker, Docker Compose, GitHub Actions CI, and automated backend tests.
+
 ## Local Development
 
 ```bash
@@ -11,6 +20,15 @@ npm run dev
 ```
 
 The site runs at `http://localhost:3000`. The API health check is available at `http://localhost:3000/api/health`.
+
+## Testing
+
+```bash
+npm audit --audit-level=high
+npm test
+```
+
+The automated test suite covers health checks, public application validation, honeypot rejection, persistence, admin authentication, admin listing, and status updates. GitHub Actions runs install, audit, and tests on pushes to `main` and pull requests.
 
 ## Environment
 
@@ -49,6 +67,39 @@ SQLite data is persisted in the `cgi-data` Docker volume mounted at `/app/data`.
 
 Deploy the container behind Nginx, Caddy, Traefik, or a platform-managed TLS proxy. A typical VPS deployment points a subdomain such as `cgi.dfh.org.il` to the host, terminates TLS at the reverse proxy, and forwards traffic to port `3000`.
 
+### Render
+
+This repository includes `render.yaml` for a Render Web Service with a persistent disk mounted at `/var/data` and `SQLITE_PATH=/var/data/cgi.sqlite`.
+
+1. Connect `https://github.com/quantumadventurer11/cgi-website` in Render.
+2. Create the Blueprint/Web Service from `render.yaml`.
+3. Confirm the service is on a paid plan that supports persistent disks.
+4. Provide `SMTP_HOST`, `SMTP_USER`, and `SMTP_PASS` when prompted, or leave SMTP unset to use the console fallback until mail credentials are ready.
+5. Keep `MAIL_TO=cgi@dfh.org.il` and allow Render to generate `ADMIN_TOKEN`.
+6. After deploy, verify `/api/health`, submit the public application form, and use `/admin.html` with the generated admin token.
+
+Recommended production checklist:
+
+- Set `NODE_ENV=production`.
+- Set a long random `ADMIN_TOKEN`.
+- Configure SMTP credentials and keep `MAIL_TO=cgi@dfh.org.il`.
+- Persist `/app/data` with a Docker volume or host mount.
+- Put the app behind HTTPS.
+- Restrict firewall access to ports 80/443 plus SSH.
+- Configure backups for the SQLite volume.
+- Run `npm audit --audit-level=high` and `npm test` before deployment.
+
 For reliable confirmation email delivery, configure SPF and DKIM for the sending domain used in `MAIL_FROM`.
 
 The `public/` folder can also be deployed as a static-only fallback on GitHub Pages, Netlify, or similar hosts. In that mode, the application form will not persist submissions, but the mailto fallback to `cgi@dfh.org.il` remains available.
+
+## Visual Assets
+
+Generated background assets live in `public/assets/`:
+
+- `hero-celestial-governance.webp`
+- `projects-research-field.webp`
+- `origins-space-law.webp`
+- `join-research-forum.webp`
+
+They are intentionally abstract, text-free, and optimized for use beneath navy/gold overlays.

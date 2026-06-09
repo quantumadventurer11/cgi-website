@@ -48,13 +48,14 @@
 
     body.innerHTML = applications.map((application) => `
       <tr>
-        <td>${escapeHtml(application.full_name)}</td>
-        <td><a href="mailto:${escapeHtml(application.email)}">${escapeHtml(application.email)}</a></td>
-        <td>${escapeHtml(application.affiliation)}</td>
-        <td>${escapeHtml(application.area_of_interest)}</td>
-        <td>${escapeHtml(application.message)}</td>
-        <td>${escapeHtml(new Date(application.created_at).toLocaleString())}</td>
-        <td>
+        <td data-label="Name">${escapeHtml(application.full_name)}</td>
+        <td data-label="Email"><a href="mailto:${escapeHtml(application.email)}">${escapeHtml(application.email)}</a></td>
+        <td data-label="Affiliation">${escapeHtml(application.affiliation)}</td>
+        <td data-label="Interest">${escapeHtml(application.area_of_interest)}</td>
+        <td data-label="Message">${escapeHtml(application.message)}</td>
+        <td data-label="Created">${escapeHtml(new Date(application.created_at).toLocaleString())}</td>
+        <td data-label="Status">
+          <span class="status-pill">${escapeHtml(application.status)}</span>
           <select data-id="${application.id}" aria-label="Status for ${escapeHtml(application.full_name)}">
             ${["new", "reviewed", "contacted"].map((statusValue) => `<option value="${statusValue}" ${application.status === statusValue ? "selected" : ""}>${statusValue}</option>`).join("")}
           </select>
@@ -66,6 +67,8 @@
       select.addEventListener("change", async () => {
         try {
           await updateStatus(select.dataset.id, select.value);
+          const pill = select.parentElement.querySelector(".status-pill");
+          if (pill) pill.textContent = select.value;
           setStatus("Status updated.", "success");
         } catch (error) {
           setStatus(error.message, "error");
@@ -90,6 +93,7 @@
       setStatus("Enter the admin token.", "error");
       return;
     }
+    tokenInput.value = "";
 
     try {
       await loadApplications();

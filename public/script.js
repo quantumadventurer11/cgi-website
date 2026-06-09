@@ -1,6 +1,7 @@
 (function () {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const header = document.querySelector("[data-header]");
+  const progress = document.querySelector("[data-scroll-progress]");
   const year = document.querySelector("[data-year]");
   const form = document.querySelector("#application-form");
   const status = document.querySelector("#form-status");
@@ -14,8 +15,30 @@
     header.classList.toggle("is-scrolled", window.scrollY > 24);
   }
 
+  function setScrollProgress() {
+    if (!progress) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+    progress.style.transform = `scaleX(${Math.min(Math.max(ratio, 0), 1)})`;
+  }
+
+  function setSectionParallax() {
+    if (prefersReducedMotion) return;
+    document.querySelectorAll(".section-image").forEach((image) => {
+      const rect = image.parentElement.getBoundingClientRect();
+      const shift = Math.max(Math.min(rect.top * -0.04, 28), -28);
+      image.style.transform = `translate3d(0, ${shift}px, 0) scale(1.04)`;
+    });
+  }
+
   setHeaderState();
-  window.addEventListener("scroll", setHeaderState, { passive: true });
+  setScrollProgress();
+  setSectionParallax();
+  window.addEventListener("scroll", () => {
+    setHeaderState();
+    setScrollProgress();
+    setSectionParallax();
+  }, { passive: true });
 
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", (event) => {
@@ -42,6 +65,22 @@
     });
   } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+
+  if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    document.querySelectorAll("[data-tilt-card]").forEach((card) => {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.setProperty("--tilt-x", `${(-y * 4).toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${(x * 5).toFixed(2)}deg`);
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+      });
+    });
   }
 
   const statValues = Array.from(document.querySelectorAll("[data-count]"));
