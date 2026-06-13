@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apply to join or collaborate with the Celestial Governance Initiative.">
+  <title>Join - Celestial Governance Initiative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Raleway:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+  <header class="site-header" data-header>
+    <nav class="nav-shell" aria-label="Primary navigation">
+      <a class="brand" href="/index.html"><img class="brand-mark" src="/logo.svg" alt="" width="48" height="48"><span>CGI</span></a>
+      <div class="nav-links">
+        <a href="/research.html">Research</a>
+        <a href="/ostgap.html">OSTGAP</a>
+        <a href="/lunar.html">Lunar Project</a>
+        <a href="/team.html">Team</a>
+        <a href="/contact.html">Contact</a>
+        <a class="nav-cta" href="/join.html" aria-current="page">Join</a>
+      </div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="page-hero section-dark">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="page-hero-content reveal">
+        <p class="eyebrow">Join / Apply</p>
+        <h1>Contribute to the next generation of space governance research.</h1>
+        <p class="hero-tagline">CGI welcomes serious collaborators who bring citation discipline, constructive participation, and professional respect to long-horizon research.</p>
+      </div>
+    </section>
+
+    <section class="section join-section">
+      <div class="section-image section-image-join" aria-hidden="true"></div>
+      <div class="join-layout">
+        <div class="join-copy reveal">
+          <p class="section-kicker">Contributor Pathways</p>
+          <h2>Role categories</h2>
+          <ul class="check-list">
+            <li>Law and policy</li>
+            <li>Economics and resource governance</li>
+            <li>Engineering and technical systems</li>
+            <li>Space science</li>
+            <li>Communications and public engagement</li>
+            <li>Web, design, and data support</li>
+          </ul>
+          <h2>Expectations</h2>
+          <p>Members are expected to support research quality, cite carefully, participate in meetings when available, collaborate constructively, and uphold respectful professional conduct.</p>
+          <p>Steering Committee meetings are biweekly Sundays at 15:00 UTC via Zoom; Lunar Project meetings are weekly Saturdays at 15:00 UTC.</p>
+          <a class="button button-secondary" href="mailto:cgi@dfh.org.il?subject=Joining%20the%20Celestial%20Governance%20Initiative">Email cgi@dfh.org.il</a>
+        </div>
+        <form class="application-form reveal" id="application-form" novalidate>
+          <div class="form-row">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" autocomplete="name" required minlength="2">
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="form-row">
+            <label for="affiliation">Affiliation</label>
+            <input id="affiliation" name="affiliation" type="text" autocomplete="organization">
+          </div>
+          <div class="form-row">
+            <label for="areaOfInterest">Area of interest</label>
+            <select id="areaOfInterest" name="areaOfInterest">
+              <option value="">Select an area</option>
+              <option>Law and policy</option>
+              <option>Economics and resource governance</option>
+              <option>Engineering and technical systems</option>
+              <option>Space science</option>
+              <option>Communications and public engagement</option>
+              <option>Web/design/data support</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="message">Motivation / background</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+          </div>
+          <div class="honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <button class="button button-primary" type="submit">Submit Application</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="/logo.svg" alt="Celestial Governance Initiative logo" width="72" height="72">
+      <p>Celestial Governance Initiative - join or collaborate</p>
+      <a href="mailto:cgi@dfh.org.il">cgi@dfh.org.il</a>
+      <span>&copy; <span data-year></span> Celestial Governance Initiative</span>
+    </div>
+  </footer>
+  <script src="/script.js" defer></script>
+</body>
+</html>
