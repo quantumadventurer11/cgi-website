@@ -172,10 +172,10 @@
       amity: {
         phase: "Phase I governance node",
         name: "Amity City",
-        coordinates: "Near-side equatorial coordination zone",
+        coordinates: "Diplomatic and administrative coordination",
         purpose: "Diplomatic, administrative, and standards-setting hub for early multilateral activity.",
         layout: "Administrative forum, civil services district, logistics port, public research campus, and settlement commons.",
-        governance: "Seat for treaty secretariat functions, registry support, dispute intake, and public transparency reporting.",
+        governance: "Tests secretariat functions, registry support, dispute intake, and public transparency reporting.",
         infrastructure: "Landing safety zone, communications spine, habitation district, data archive, and visiting delegation facilities.",
         function: "Coordination center for science access, civil administration, and public-interest settlement planning.",
         status: "Proposed international administrative district under a treaty-based lunar authority."
@@ -183,7 +183,7 @@
       mycenae: {
         phase: "Phase II science and heritage node",
         name: "Mycenae",
-        coordinates: "Near-side highland science district placeholder",
+        coordinates: "Science, heritage, and long-duration research",
         purpose: "Scientific operations, heritage protection, and long-duration research governance.",
         layout: "Research campus, protected heritage buffer, instrument fields, habitat clusters, and rover corridors.",
         governance: "Administers science access protocols, heritage safeguards, and research data transparency.",
@@ -194,7 +194,7 @@
       hattusa: {
         phase: "Phase III power and logistics node",
         name: "Hattusa",
-        coordinates: "South polar resource and power zone placeholder",
+        coordinates: "Power, logistics, and volatile-access governance",
         purpose: "Power, volatile-access logistics, and infrastructure support for the broader lunar network.",
         layout: "Solar ridge arrays, cold-trap operations support, cryogenic storage, industrial safety buffers, and logistics yards.",
         governance: "Coordinates resource activity licensing, environmental monitoring, and shared infrastructure rules.",
@@ -205,7 +205,7 @@
       tycho: {
         phase: "Phase IV resilience and deep-field node",
         name: "Tycho",
-        coordinates: "Southern crater operations zone placeholder",
+        coordinates: "Resilience, contingency, and exploration support",
         purpose: "Resilient infrastructure, deep-field exploration support, and distributed emergency capability.",
         layout: "Shielded habitats, emergency reserves, deep-field mission control, construction yards, and science outposts.",
         governance: "Provides redundancy for administration, emergency coordination, and inter-node operational continuity.",
@@ -291,7 +291,7 @@
         form.reset();
         setStatus("Application received. CGI will respond by email.", "success");
       } catch (error) {
-        setStatus(`${error.message} You may also email cgi@dfh.org.il directly.`, "error");
+        setStatus(`${error.message} You may also email contact@celestialgovernance.org directly.`, "error");
       } finally {
         submitButton.disabled = false;
       }

@@ -1,62 +1,102 @@
 const express = require("express");
-const rateLimit = require("express-rate-limit");
 const { z } = require("zod");
 const { insertApplication } = require("../db");
 const { validateBody } = require("../middleware/validate");
-const { sendApplicationEmails } = require("../services/mailer");
 
 const router = express.Router();
 
-const applicationLimit = rateLimit({
-  windowMs: 60 * 1000,
-  limit: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    ok: false,
-    error: "Too many application attempts. Please wait and try again."
-  }
-});
-
-const optionalTrimmed = (max, fieldName) => z.preprocess((value) => {
-  if (typeof value !== "string") return undefined;
-  const trimmed = value.trim();
-  return trimmed.length ? trimmed : undefined;
-}, z.string().max(max, `${fieldName} is too long.`).optional());
-
 const applicationSchema = z.object({
-  fullName: z.string().trim().min(2, "Full name is required.").max(120, "Full name is too long."),
-  email: z.string().trim().email("A valid email is required.").max(254, "Email is too long."),
-  affiliation: optionalTrimmed(160, "Affiliation"),
-  areaOfInterest: optionalTrimmed(80, "Area of interest"),
-  message: optionalTrimmed(2000, "Message"),
-  website: z.string().optional()
+  fullName: z.string().trim().min(2, "Full name is required.").max(160),
+  email: z.string().trim().email("A valid email address is required.").max(254),
+  affiliation: z.string().trim().max(200).optional().default(""),
+  areaOfInterest: z.string().trim().max(200).optional().default(""),
+  message: z.string().trim().max(3000).optional().default(""),
+  website: z.string().trim().max(300).optional().default("")
 });
 
-router.post("/", applicationLimit, validateBody(applicationSchema), async (req, res, next) => {
+function buildNotificationEmail(application) {
+  return {
+    to: process.env.MAIL_TO || "contact@celestialgovernance.org",
+    from: process.env.MAIL_FROM || "CGI Website <no-reply@celestialgovernance.org>",
+    subject: `New CGI membership application from ${application.fullName}`,
+    text: [
+      "A new CGI membership application was submitted.",
+      "",
+      `Name: ${application.fullName}`,
+      `Email: ${application.email}`,
+      `Affiliation: ${application.affiliation || "Not provided"}`,
+      `Area of interest: ${application.areaOfInterest || "Not provided"}`,
+      "",
+      application.message || "No message provided."
+    ].join("\n")
+  };
+}
+
+function buildConfirmationEmail(application) {
+  return {
+    to: application.email,
+    from: process.env.MAIL_FROM || "CGI Website <no-reply@celestialgovernance.org>",
+    subject: "CGI membership application received",
+    text: [
+      `Dear ${application.fullName},`,
+      "",
+      "Thank you for your interest in the Celestial Governance Initiative.",
+      "Your application has been received. The team will review your interest and route it toward an appropriate project or general membership path.",
+      "",
+      "Celestial Governance Initiative",
+      "contact@celestialgovernance.org"
+    ].join("\n")
+  };
+}
+
+async function sendMail(message) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+    console.info("Email delivery not configured; message follows.");
+    console.info(message);
+    return;
+  }
+
+  const nodemailer = require("nodemailer");
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: Number(SMTP_PORT || 587),
+    secure: Number(SMTP_PORT || 587) === 465,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS
+    }
+  });
+
+  await transporter.sendMail(message);
+}
+
+router.post("/", validateBody(applicationSchema), async (req, res, next) => {
   try {
     const application = req.validatedBody;
 
-    if (application.website && application.website.trim()) {
+    if (application.website) {
       return res.status(400).json({
         ok: false,
-        error: "Invalid application."
+        error: "Invalid submission."
       });
     }
 
-    const createdAt = new Date().toISOString();
-    const row = {
+    await insertApplication({
       full_name: application.fullName,
       email: application.email,
-      affiliation: application.affiliation || null,
-      area_of_interest: application.areaOfInterest || null,
-      message: application.message || null,
-      created_at: createdAt,
+      affiliation: application.affiliation,
+      area_of_interest: application.areaOfInterest,
+      message: application.message,
+      created_at: new Date().toISOString(),
       status: "new"
-    };
+    });
 
-    await insertApplication(row);
-    await sendApplicationEmails(application);
+    await Promise.all([
+      sendMail(buildNotificationEmail(application)),
+      sendMail(buildConfirmationEmail(application))
+    ]);
 
     return res.status(201).json({ ok: true });
   } catch (error) {

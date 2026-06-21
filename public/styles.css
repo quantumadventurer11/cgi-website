@@ -901,7 +901,7 @@ p {
   color: var(--color-ink);
 }
 
-.placeholder-tag {
+.label-tag {
   display: inline-flex;
   width: fit-content;
   border: 1px solid rgba(10, 26, 63, 0.16);
@@ -1343,6 +1343,13 @@ textarea:focus {
   min-height: 1.5rem;
   margin: 0;
   font-weight: 600;
+}
+
+.form-note {
+  margin: 0;
+  color: #4D5B7D;
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .form-status.is-success {

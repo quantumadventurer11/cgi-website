@@ -1,15 +1,66 @@
 const express = require("express");
 const { z } = require("zod");
-const { getApplication, listApplications, updateApplicationStatus } = require("../db");
+const {
+  createAdminSession,
+  deleteExpiredAdminSessions,
+  findAdminUserByUsername,
+  getApplication,
+  listApplications,
+  updateApplicationStatus
+} = require("../db");
 const { requireAdmin } = require("../middleware/auth");
 const { validateBody } = require("../middleware/validate");
+const { createSessionToken, verifyPassword } = require("../services/passwords");
 
 const router = express.Router();
+
+const loginSchema = z.object({
+  username: z.string().trim().min(1, "Username is required.").max(120),
+  password: z.string().min(1, "Password is required.").max(256)
+});
 
 const statusSchema = z.object({
   status: z.enum(["new", "reviewed", "contacted"], {
     errorMap: () => ({ message: "Status must be new, reviewed, or contacted." })
   })
+});
+
+router.post("/login", validateBody(loginSchema), async (req, res, next) => {
+  try {
+    const { username, password } = req.validatedBody;
+    const adminUser = await findAdminUserByUsername(username);
+
+    if (!adminUser || !verifyPassword(password, adminUser)) {
+      return res.status(401).json({
+        ok: false,
+        error: "Invalid username or password."
+      });
+    }
+
+    await deleteExpiredAdminSessions();
+
+    const now = new Date();
+    const expiresAt = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+    const session = createSessionToken();
+
+    await createAdminSession({
+      admin_user_id: adminUser.id,
+      token_hash: session.token_hash,
+      created_at: now.toISOString(),
+      expires_at: expiresAt.toISOString()
+    });
+
+    return res.json({
+      ok: true,
+      token: session.token,
+      expiresAt: expiresAt.toISOString(),
+      admin: {
+        username: adminUser.username
+      }
+    });
+  } catch (error) {
+    return next(error);
+  }
 });
 
 router.use(requireAdmin);

@@ -9,14 +9,16 @@ const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cgi-api-"));
 process.env.NODE_ENV = "test";
 process.env.ADMIN_TOKEN = "test-admin-token";
 process.env.SQLITE_PATH = path.join(tempDir, "test.sqlite");
-process.env.MAIL_TO = "cgi@dfh.org.il";
-process.env.MAIL_FROM = "CGI Website <no-reply@dfh.org.il>";
+process.env.MAIL_TO = "contact@celestialgovernance.org";
+process.env.MAIL_FROM = "CGI Website <no-reply@celestialgovernance.org>";
 delete process.env.SMTP_HOST;
 delete process.env.SMTP_USER;
 delete process.env.SMTP_PASS;
 
 const request = require("supertest");
 const app = require("../src/app");
+const { createAdminUser } = require("../src/db");
+const { hashPassword } = require("../src/services/passwords");
 
 test("GET /api/health returns ok", async () => {
   const response = await request(app).get("/api/health").expect(200);
@@ -45,7 +47,13 @@ test("POST /api/applications rejects honeypot submissions", async () => {
   assert.equal(response.body.ok, false);
 });
 
-test("application flow persists, lists, and updates status", async () => {
+test("application flow persists, lists, signs in, and updates status", async () => {
+  await createAdminUser({
+    username: "dev-admin",
+    ...hashPassword("correct horse battery staple"),
+    created_at: new Date().toISOString()
+  });
+
   const submitResponse = await request(app)
     .post("/api/applications")
     .send({
@@ -62,9 +70,23 @@ test("application flow persists, lists, and updates status", async () => {
 
   await request(app).get("/api/admin/applications").expect(401);
 
+  await request(app)
+    .post("/api/admin/login")
+    .send({ username: "dev-admin", password: "wrong password" })
+    .expect(401);
+
+  const loginResponse = await request(app)
+    .post("/api/admin/login")
+    .send({ username: "dev-admin", password: "correct horse battery staple" })
+    .expect(200);
+
+  assert.equal(loginResponse.body.ok, true);
+  assert.equal(loginResponse.body.admin.username, "dev-admin");
+  assert.equal(typeof loginResponse.body.token, "string");
+
   const listResponse = await request(app)
     .get("/api/admin/applications")
-    .set("Authorization", "Bearer test-admin-token")
+    .set("Authorization", `Bearer ${loginResponse.body.token}`)
     .expect(200);
 
   assert.equal(listResponse.body.ok, true);
@@ -74,9 +96,14 @@ test("application flow persists, lists, and updates status", async () => {
   const id = listResponse.body.applications[0].id;
   const patchResponse = await request(app)
     .patch(`/api/admin/applications/${id}`)
-    .set("x-admin-token", "test-admin-token")
+    .set("Authorization", `Bearer ${loginResponse.body.token}`)
     .send({ status: "contacted" })
     .expect(200);
 
   assert.equal(patchResponse.body.application.status, "contacted");
+
+  await request(app)
+    .get("/api/admin/applications")
+    .set("Authorization", "Bearer test-admin-token")
+    .expect(200);
 });

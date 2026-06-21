@@ -1,16 +1,10 @@
-<!-- Future maintainers: replace this original generated mark with the official CGI logo when one is adopted. -->
-<svg id="cgi-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
   <title id="title">Celestial Governance Initiative logo</title>
-  <desc id="desc">A gold orbital ring encircling a celestial body with a central star and CGI monogram.</desc>
-  <defs>
-    <linearGradient id="gold" x1="25" y1="25" x2="135" y2="135" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#E3BE45"/>
-      <stop offset="1" stop-color="#C9A227"/>
-    </linearGradient>
-  </defs>
-  <circle cx="80" cy="80" r="52" fill="none" stroke="url(#gold)" stroke-width="3"/>
-  <ellipse cx="80" cy="80" rx="70" ry="24" fill="none" stroke="url(#gold)" stroke-width="3" transform="rotate(-24 80 80)"/>
-  <circle cx="80" cy="80" r="24" fill="#0A1A3F" stroke="url(#gold)" stroke-width="2.5"/>
-  <path d="M80 60l4.5 13.5H99L87.3 82l4.5 13.5L80 87.2l-11.8 8.3L72.7 82 61 73.5h14.5L80 60z" fill="#C9A227"/>
-  <text x="80" y="124" text-anchor="middle" fill="#F4F1E8" font-family="Raleway, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="4">CGI</text>
+  <desc id="desc">A gold orbital mark surrounding a central governance star.</desc>
+  <rect width="128" height="128" rx="24" fill="#06122E"/>
+  <circle cx="64" cy="64" r="34" fill="none" stroke="#C9A227" stroke-width="4"/>
+  <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#C9A227" stroke-width="3" transform="rotate(-24 64 64)"/>
+  <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#F4F1E8" stroke-opacity=".62" stroke-width="2" transform="rotate(24 64 64)"/>
+  <path fill="#C9A227" d="M64 36l6.8 19.6L91 64l-20.2 8.4L64 92l-6.8-19.6L37 64l20.2-8.4L64 36z"/>
+  <circle cx="96" cy="44" r="5" fill="#F4F1E8"/>
 </svg>

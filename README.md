@@ -1,15 +1,15 @@
 # Celestial Governance Initiative Website
 
-Production-grade website and membership application backend for the Celestial Governance Initiative (CGI), under the Democracy and Federalism Hub and affiliated with the Space Generation Advisory Council.
+Production website and membership application backend for the Celestial Governance Initiative (CGI), a research and policy institute for the governance of outer space.
 
 ## What Is Included
 
-- Polished single-page public website with generated WebP background assets, scroll animation, reduced-motion support, and responsive team profiles.
+- Single-page public website presenting CGI's mission, active projects, governance framework, and membership pathway.
 - Node.js + Express API for membership applications.
 - Durable Neon Postgres support for Vercel, with SQLite persistence through `better-sqlite3` for local development and Docker.
 - Nodemailer notification and applicant confirmation emails, with console fallback in development.
-- Protected admin API and branded admin interface at `/admin.html`.
-- Docker, Docker Compose, GitHub Actions CI, and automated backend tests.
+- Protected named-account admin API and admin interface at `/admin.html`.
+- Automated backend tests with Node's built-in test runner.
 
 ## Local Development
 
@@ -28,7 +28,7 @@ npm audit --audit-level=high
 npm test
 ```
 
-The automated test suite covers health checks, public application validation, honeypot rejection, persistence, admin authentication, admin listing, and status updates. GitHub Actions runs install, audit, and tests on pushes to `main` and pull requests.
+The automated test suite covers health checks, public application validation, honeypot rejection, persistence, admin authentication, admin listing, and status updates.
 
 ## Environment
 
@@ -36,11 +36,12 @@ Copy `.env.example` to `.env` and set:
 
 - `PORT`: HTTP port, default `3000`.
 - `NODE_ENV`: use `development` locally and `production` in deployment.
-- `ADMIN_TOKEN`: long random secret for admin API access.
-- `DATABASE_URL` or `POSTGRES_URL`: Neon Postgres connection string for Vercel production. Leave unset locally to use SQLite.
+- `ADMIN_TOKEN`: optional long random fallback secret for admin API access.
+- `ADMIN_USERNAME`, `ADMIN_PASSWORD`: used by `npm run create-admin` to create or rotate a named admin account. Use a password of at least 16 characters.
+- `DATABASE_URL` or `POSTGRES_URL`: Neon Postgres connection string for production. Leave unset locally to use SQLite.
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`: SMTP credentials.
-- `MAIL_FROM`: sender identity, default `CGI Website <no-reply@dfh.org.il>`.
-- `MAIL_TO`: application notification recipient, default `cgi@dfh.org.il`.
+- `MAIL_FROM`: sender identity, default `CGI Website <no-reply@celestialgovernance.org>`.
+- `MAIL_TO`: application notification recipient, default `contact@celestialgovernance.org`.
 
 If SMTP is not configured, submitted applications are still saved and both emails are logged to the server console for development testing.
 
@@ -48,75 +49,52 @@ If SMTP is not configured, submitted applications are still saved and both email
 
 - `GET /api/health` returns `{ "ok": true }`.
 - `POST /api/applications` accepts `{ fullName, email, affiliation?, areaOfInterest?, message?, website? }`. The `website` field is a honeypot and must be empty.
-- `GET /api/admin/applications` requires `Authorization: Bearer <ADMIN_TOKEN>` or `x-admin-token`.
-- `PATCH /api/admin/applications/:id` requires the same token and accepts `{ "status": "new" | "reviewed" | "contacted" }`.
+- `POST /api/admin/login` accepts `{ "username", "password" }` and returns a session token.
+- `GET /api/admin/applications` requires `Authorization: Bearer <session token>`. The legacy `ADMIN_TOKEN` also remains accepted as a fallback.
+- `PATCH /api/admin/applications/:id` requires the same authorization and accepts `{ "status": "new" | "reviewed" | "contacted" }`.
 
 ## Admin View
 
-Open `http://localhost:3000/admin.html`, enter the configured `ADMIN_TOKEN`, and load applications. Status changes are written through the protected admin API.
-
-## Docker
+Create a named admin account, then open `http://localhost:3000/admin.html` and sign in:
 
 ```bash
-cp .env.example .env
-docker compose up --build
+ADMIN_USERNAME=dev-admin ADMIN_PASSWORD=<secure password> npm run create-admin
 ```
 
-SQLite data is persisted in the `cgi-data` Docker volume mounted at `/app/data`.
+Status changes are written through the protected admin API.
 
 ## Deployment
 
-Deploy the container behind Nginx, Caddy, Traefik, or a platform-managed TLS proxy. A typical VPS deployment points a subdomain such as `cgi.dfh.org.il` to the host, terminates TLS at the reverse proxy, and forwards traffic to port `3000`.
+Deploy the container behind Nginx, Caddy, Traefik, or a platform-managed TLS proxy. A typical deployment points the production domain to the host, terminates TLS at the reverse proxy, and forwards traffic to port `3000`.
 
-### Vercel + Neon
+Recommended production environment variables:
 
-This repository includes `vercel.json` and `api/index.js` so Vercel can serve `public/` through its CDN and run the Express API as a Vercel Function.
-
-```bash
-npx vercel install neon
-npx vercel env add ADMIN_TOKEN production
-npx vercel env add NODE_ENV production
-npx vercel env add MAIL_TO production
-npx vercel env add MAIL_FROM production
-npx vercel --prod
-```
-
-Recommended Vercel environment variables:
-
-- `DATABASE_URL` or `POSTGRES_URL`, provided by the Neon Marketplace integration.
+- `DATABASE_URL` or `POSTGRES_URL`
 - `NODE_ENV=production`
-- `ADMIN_TOKEN=<long random string>`
-- `MAIL_TO=cgi@dfh.org.il`
-- `MAIL_FROM=CGI Website <no-reply@dfh.org.il>`
+- `ADMIN_TOKEN=<long random string>` as a fallback admin secret
+- `ADMIN_USERNAME`, `ADMIN_PASSWORD` for creating the first named admin account
+- `MAIL_TO=contact@celestialgovernance.org`
+- `MAIL_FROM=CGI Website <no-reply@celestialgovernance.org>`
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` when production mail credentials are ready
-
-The app automatically uses Neon when `DATABASE_URL` or `POSTGRES_URL` is present. If neither is present, it falls back to SQLite locally and to temporary `/tmp` SQLite on Vercel; that temporary Vercel fallback is useful for smoke testing but not durable production storage.
-
-### Render
-
-This repository includes `render.yaml` for a Render Web Service with a persistent disk mounted at `/var/data` and `SQLITE_PATH=/var/data/cgi.sqlite`.
-
-1. Connect `https://github.com/quantumadventurer11/cgi-website` in Render.
-2. Create the Blueprint/Web Service from `render.yaml`.
-3. Confirm the service is on a paid plan that supports persistent disks.
-4. Provide `SMTP_HOST`, `SMTP_USER`, and `SMTP_PASS` when prompted, or leave SMTP unset to use the console fallback until mail credentials are ready.
-5. Keep `MAIL_TO=cgi@dfh.org.il` and allow Render to generate `ADMIN_TOKEN`.
-6. After deploy, verify `/api/health`, submit the public application form, and use `/admin.html` with the generated admin token.
 
 Recommended production checklist:
 
 - Set `NODE_ENV=production`.
-- Set a long random `ADMIN_TOKEN`.
-- Configure SMTP credentials and keep `MAIL_TO=cgi@dfh.org.il`.
-- Persist `/app/data` with a Docker volume or host mount.
+- Create a named admin account with `npm run create-admin` and keep a long random `ADMIN_TOKEN` fallback.
+- Configure SMTP credentials and keep `MAIL_TO=contact@celestialgovernance.org`.
+- Persist `/app/data` with a Docker volume, host mount, or managed database.
 - Put the app behind HTTPS.
 - Restrict firewall access to ports 80/443 plus SSH.
-- Configure backups for the SQLite volume.
+- Configure backups for the database.
 - Run `npm audit --audit-level=high` and `npm test` before deployment.
 
 For reliable confirmation email delivery, configure SPF and DKIM for the sending domain used in `MAIL_FROM`.
 
-The `public/` folder can also be deployed as a static-only fallback on GitHub Pages, Netlify, or similar hosts. In that mode, the application form will not persist submissions, but the mailto fallback to `cgi@dfh.org.il` remains available.
+The `public/` folder can also be deployed as a static-only fallback on GitHub Pages, Netlify, or similar hosts. In that mode, the application form will not persist submissions, but the mailto fallback to `contact@celestialgovernance.org` remains available.
+
+## Governance Alignment
+
+The public website summarizes CGI's governance framework: mission, active projects, governance organs, membership pathway, publication discipline, and research review practices.
 
 ## Visual Assets
 
@@ -126,5 +104,3 @@ Generated background assets live in `public/assets/`:
 - `projects-research-field.webp`
 - `origins-space-law.webp`
 - `join-research-forum.webp`
-
-They are intentionally abstract, text-free, and optimized for use beneath navy/gold overlays.

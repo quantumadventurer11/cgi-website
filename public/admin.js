@@ -1,6 +1,7 @@
 (function () {
-  const form = document.querySelector("#admin-token-form");
-  const tokenInput = document.querySelector("#admin-token");
+  const form = document.querySelector("#admin-login-form");
+  const usernameInput = document.querySelector("#admin-username");
+  const passwordInput = document.querySelector("#admin-password");
   const status = document.querySelector("#admin-status");
   const body = document.querySelector("#applications-body");
   let token = "";
@@ -86,18 +87,33 @@
     setStatus("Applications loaded.", "success");
   }
 
+  async function login(username, password) {
+    const response = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "Unable to sign in.");
+    return result.token;
+  }
+
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
-    token = tokenInput.value.trim();
-    if (!token) {
-      setStatus("Enter the admin token.", "error");
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+    if (!username || !password) {
+      setStatus("Enter your username and password.", "error");
       return;
     }
-    tokenInput.value = "";
+    passwordInput.value = "";
 
     try {
+      setStatus("Signing in...", "");
+      token = await login(username, password);
       await loadApplications();
     } catch (error) {
+      token = "";
       setStatus(error.message, "error");
     }
   });

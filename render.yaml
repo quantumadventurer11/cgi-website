@@ -22,9 +22,9 @@ services:
       - key: ADMIN_TOKEN
         generateValue: true
       - key: MAIL_TO
-        value: cgi@dfh.org.il
+        value: contact@celestialgovernance.org
       - key: MAIL_FROM
-        value: CGI Website <no-reply@dfh.org.il>
+        value: CGI Website <no-reply@celestialgovernance.org>
       - key: SMTP_HOST
         sync: false
       - key: SMTP_PORT

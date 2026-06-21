@@ -20,11 +20,13 @@
           <h1>Membership Applications</h1>
         </div>
       </div>
-      <form class="admin-token-form" id="admin-token-form">
-        <label for="admin-token">Admin token</label>
+      <form class="admin-token-form" id="admin-login-form">
+        <label for="admin-username">Username</label>
+        <input id="admin-username" name="username" type="text" autocomplete="username" required>
+        <label for="admin-password">Password</label>
         <div class="token-row">
-          <input id="admin-token" type="password" autocomplete="current-password" required>
-          <button class="button button-primary" type="submit">Load</button>
+          <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+          <button class="button button-primary" type="submit">Sign In</button>
         </div>
       </form>
       <p class="form-status" id="admin-status" role="status" aria-live="polite"></p>
@@ -42,7 +44,7 @@
             </tr>
           </thead>
           <tbody id="applications-body">
-            <tr><td colspan="7">Enter the admin token to load applications.</td></tr>
+            <tr><td colspan="7">Sign in to load applications.</td></tr>
           </tbody>
         </table>
       </div>
