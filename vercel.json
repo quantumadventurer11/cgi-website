@@ -4,6 +4,98 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/index.js"
+    },
+    {
+      "source": "/research",
+      "destination": "/research.html"
+    },
+    {
+      "source": "/topics",
+      "destination": "/topics.html"
+    },
+    {
+      "source": "/insights",
+      "destination": "/insights.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/team",
+      "destination": "/team.html"
+    },
+    {
+      "source": "/faq",
+      "destination": "/faq.html"
+    },
+    {
+      "source": "/glossary",
+      "destination": "/glossary.html"
+    },
+    {
+      "source": "/join",
+      "destination": "/join.html"
+    },
+    {
+      "source": "/projects/lunar",
+      "destination": "/projects/lunar.html"
+    },
+    {
+      "source": "/projects/ostgap",
+      "destination": "/projects/ostgap.html"
+    },
+    {
+      "source": "/publications/ostgap-report",
+      "destination": "/publications/ostgap-report.html"
+    },
+    {
+      "source": "/insights/outer-space-treaty-gaps",
+      "destination": "/insights/outer-space-treaty-gaps.html"
+    },
+    {
+      "source": "/insights/what-is-outer-space-governance",
+      "destination": "/insights/what-is-outer-space-governance.html"
+    },
+    {
+      "source": "/insights/why-lunar-governance-matters",
+      "destination": "/insights/why-lunar-governance-matters.html"
+    },
+    {
+      "source": "/topics/article-ii",
+      "destination": "/topics/article-ii.html"
+    },
+    {
+      "source": "/topics/article-vi",
+      "destination": "/topics/article-vi.html"
+    },
+    {
+      "source": "/topics/article-ix",
+      "destination": "/topics/article-ix.html"
+    },
+    {
+      "source": "/topics/copuos-policy",
+      "destination": "/topics/copuos-policy.html"
+    },
+    {
+      "source": "/topics/lunar-governance",
+      "destination": "/topics/lunar-governance.html"
+    },
+    {
+      "source": "/topics/outer-space-governance",
+      "destination": "/topics/outer-space-governance.html"
+    },
+    {
+      "source": "/topics/outer-space-treaty-gaps",
+      "destination": "/topics/outer-space-treaty-gaps.html"
+    },
+    {
+      "source": "/topics/space-resources-governance",
+      "destination": "/topics/space-resources-governance.html"
+    },
+    {
+      "source": "/topics/space-settlement-governance",
+      "destination": "/topics/space-settlement-governance.html"
     }
   ],
   "functions": {
