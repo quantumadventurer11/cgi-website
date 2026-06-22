@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join Or Contact CGI | Celestial Governance Initiative</title>
+  <meta name="description" content="Apply to contribute to CGI research or contact the Celestial Governance Initiative about membership, partnerships, and publications.">
+  <link rel="canonical" href="https://celestialgovernance.org/join">
+  <meta property="og:url" content="https://celestialgovernance.org/join">
+  <meta property="og:title" content="Join Or Contact CGI">
+  <meta property="og:description" content="Membership applications and contact information for CGI.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="publication-page join-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header is-scrolled">
+    <nav class="nav-shell" aria-label="Primary navigation">
+      <a class="brand" href="/"><img class="brand-mark" src="/logo.svg" alt="" width="48" height="48"><span>Celestial Governance Initiative</span></a>
+      <div class="nav-links"><a href="/research">Research</a><a href="/topics">Topics</a><a href="/about">Governance</a><a href="/faq">FAQ</a><a class="nav-cta" href="/join" aria-current="page">Join CGI</a></div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="page-hero section-dark">
+      <div class="hero-backdrop"></div>
+      <div class="page-hero-content">
+        <p class="eyebrow">Join or contact</p>
+        <h1>Contribute to space governance research.</h1>
+        <p class="hero-tagline">Use this form for membership interest, project participation, partnerships, or publication questions.</p>
+      </div>
+    </section>
+    <section class="section join-layout">
+      <div class="join-copy">
+        <p class="section-kicker">Application pathway</p>
+        <h2>What to expect</h2>
+        <p>The team reviews incoming interest and routes applicants toward an appropriate project or general membership path. Admission depends on fit, capacity, and current project needs.</p>
+        <p>Membership interest is reviewed for fit with current research priorities and general participation pathways. Admitted members in good standing may be invited into governance participation where appropriate.</p>
+        <p>For direct correspondence, email <a href="mailto:contact@celestialgovernance.org">contact@celestialgovernance.org</a>.</p>
+      </div>
+      <form class="application-form" id="application-form">
+        <div class="form-row">
+          <label for="fullName">Full name</label>
+          <input id="fullName" name="fullName" type="text" autocomplete="name" required>
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="form-row">
+          <label for="affiliation">Affiliation</label>
+          <input id="affiliation" name="affiliation" type="text" autocomplete="organization">
+        </div>
+        <div class="form-row">
+          <label for="areaOfInterest">Area of interest</label>
+          <select id="areaOfInterest" name="areaOfInterest">
+            <option value="">Select an area</option>
+            <option>Outer Space Treaty analysis</option>
+            <option>Lunar governance</option>
+            <option>Research and publication review</option>
+            <option>Communications and outreach</option>
+            <option>Governance and administration</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="message">How would you like to contribute?</label>
+          <textarea id="message" name="message" rows="5"></textarea>
+        </div>
+        <div class="honeypot" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="button button-primary" type="submit">Submit application</button>
+        <p class="form-note">Privacy note: submitted information is used to review membership interest and contact applicants. It is not used for unrelated outreach.</p>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><p><a href="/research">Research library</a> · <a href="/faq">FAQ</a> · <a href="mailto:contact@celestialgovernance.org">contact@celestialgovernance.org</a></p></div></footer>
+  <script src="/script.js" defer></script>
+</body>
+</html>

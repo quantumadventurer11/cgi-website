@@ -7,7 +7,9 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "create-admin": "node scripts/create-admin.js",
-    "test": "node --test test/api.test.js"
+    "test": "node --test test/api.test.js",
+    "seo:check": "node scripts/seo-check.js",
+    "smoke:lunar": "node scripts/lunar-smoke.js"
   },
   "keywords": [
     "cgi",
@@ -29,10 +31,12 @@
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.0.0",
     "nodemailer": "^9.0.1",
+    "three": "^0.180.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9",
+    "playwright": "^1.61.0",
     "supertest": "^7.1.4"
   }
 }

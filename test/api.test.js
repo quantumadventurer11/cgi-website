@@ -25,6 +25,39 @@ test("GET /api/health returns ok", async () => {
   assert.deepEqual(response.body, { ok: true });
 });
 
+test("public routes return successful responses", async () => {
+  const routes = [
+    "/",
+    "/research",
+    "/projects/ostgap",
+    "/projects/lunar",
+    "/topics",
+    "/join",
+    "/robots.txt",
+    "/sitemap.xml"
+  ];
+
+  for (const route of routes) {
+    await request(app).get(route).expect(200);
+  }
+});
+
+test("legacy public paths redirect to canonical routes", async () => {
+  const redirects = {
+    "/research.html": "/research",
+    "/join.html": "/join",
+    "/contact.html": "/join",
+    "/lunar.html": "/projects/lunar",
+    "/ostgap.html": "/projects/ostgap",
+    "/team.html": "/team"
+  };
+
+  for (const [from, to] of Object.entries(redirects)) {
+    const response = await request(app).get(from).expect(301);
+    assert.equal(response.headers.location, to);
+  }
+});
+
 test("POST /api/applications rejects invalid body", async () => {
   const response = await request(app)
     .post("/api/applications")

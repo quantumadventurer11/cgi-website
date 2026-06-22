@@ -120,6 +120,23 @@
     });
   }
 
+  const researchLibrary = document.querySelector("[data-research-library]");
+  if (researchLibrary) {
+    const filters = Array.from(researchLibrary.querySelectorAll("[data-filter]"));
+    const items = Array.from(researchLibrary.querySelectorAll("[data-library-item]"));
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        const value = filter.dataset.filter;
+        filters.forEach((button) => button.classList.toggle("is-active", button === filter));
+        items.forEach((item) => {
+          const isVisible = value === "all" || item.dataset.libraryItem === value;
+          item.hidden = !isVisible;
+        });
+      });
+    });
+  }
+
   const canvas = document.querySelector("[data-starfield]");
   if (canvas && !prefersReducedMotion) {
     const context = canvas.getContext("2d");
@@ -164,87 +181,6 @@
     resize();
     draw();
     window.addEventListener("resize", resize);
-  }
-
-  const lunarAtlas = document.querySelector("[data-lunar-atlas]");
-  if (lunarAtlas) {
-    const baseData = {
-      amity: {
-        phase: "Phase I governance node",
-        name: "Amity City",
-        coordinates: "Diplomatic and administrative coordination",
-        purpose: "Diplomatic, administrative, and standards-setting hub for early multilateral activity.",
-        layout: "Administrative forum, civil services district, logistics port, public research campus, and settlement commons.",
-        governance: "Tests secretariat functions, registry support, dispute intake, and public transparency reporting.",
-        infrastructure: "Landing safety zone, communications spine, habitation district, data archive, and visiting delegation facilities.",
-        function: "Coordination center for science access, civil administration, and public-interest settlement planning.",
-        status: "Proposed international administrative district under a treaty-based lunar authority."
-      },
-      mycenae: {
-        phase: "Phase II science and heritage node",
-        name: "Mycenae",
-        coordinates: "Science, heritage, and long-duration research",
-        purpose: "Scientific operations, heritage protection, and long-duration research governance.",
-        layout: "Research campus, protected heritage buffer, instrument fields, habitat clusters, and rover corridors.",
-        governance: "Administers science access protocols, heritage safeguards, and research data transparency.",
-        infrastructure: "Laboratories, observatories, archive vaults, sample handling facilities, and controlled mobility routes.",
-        function: "Science, preservation, education, and public-interest research access.",
-        status: "Proposed protected science district with special administrative safeguards."
-      },
-      hattusa: {
-        phase: "Phase III power and logistics node",
-        name: "Hattusa",
-        coordinates: "Power, logistics, and volatile-access governance",
-        purpose: "Power, volatile-access logistics, and infrastructure support for the broader lunar network.",
-        layout: "Solar ridge arrays, cold-trap operations support, cryogenic storage, industrial safety buffers, and logistics yards.",
-        governance: "Coordinates resource activity licensing, environmental monitoring, and shared infrastructure rules.",
-        infrastructure: "Power grids, landing pads, storage tanks, maintenance bays, and robotic survey corridors.",
-        function: "Resource support, energy distribution, water-ice logistics, and industrial safety coordination.",
-        status: "Proposed regulated resource-support district under international oversight."
-      },
-      tycho: {
-        phase: "Phase IV resilience and deep-field node",
-        name: "Tycho",
-        coordinates: "Resilience, contingency, and exploration support",
-        purpose: "Resilient infrastructure, deep-field exploration support, and distributed emergency capability.",
-        layout: "Shielded habitats, emergency reserves, deep-field mission control, construction yards, and science outposts.",
-        governance: "Provides redundancy for administration, emergency coordination, and inter-node operational continuity.",
-        infrastructure: "Radiation-shielded shelters, backup communications, repair depots, and long-range rover staging.",
-        function: "Settlement resilience, engineering, exploration staging, and contingency administration.",
-        status: "Proposed resilient operations district with network continuity responsibilities."
-      }
-    };
-
-    const fields = {
-      phase: lunarAtlas.querySelector("[data-base-phase]"),
-      name: lunarAtlas.querySelector("[data-base-name]"),
-      coordinates: lunarAtlas.querySelector("[data-base-coordinates]"),
-      purpose: lunarAtlas.querySelector("[data-base-purpose]"),
-      layout: lunarAtlas.querySelector("[data-base-layout]"),
-      governance: lunarAtlas.querySelector("[data-base-governance]"),
-      infrastructure: lunarAtlas.querySelector("[data-base-infrastructure]"),
-      function: lunarAtlas.querySelector("[data-base-function]"),
-      status: lunarAtlas.querySelector("[data-base-status]")
-    };
-
-    function selectBase(key) {
-      const data = baseData[key];
-      if (!data) return;
-
-      Object.entries(fields).forEach(([field, element]) => {
-        if (element) element.textContent = data[field];
-      });
-
-      lunarAtlas.querySelectorAll("[data-base]").forEach((button) => {
-        const isActive = button.dataset.base === key;
-        button.classList.toggle("is-active", isActive);
-        button.setAttribute("aria-pressed", String(isActive));
-      });
-    }
-
-    lunarAtlas.querySelectorAll("[data-base]").forEach((button) => {
-      button.addEventListener("click", () => selectBase(button.dataset.base));
-    });
   }
 
   function setStatus(message, type) {

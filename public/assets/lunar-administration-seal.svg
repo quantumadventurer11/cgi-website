@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="title desc">
+  <title id="title">Hypothetical Lunar Administration seal</title>
+  <desc id="desc">A circular navy and gold concept seal with a lunar horizon, orbital arc, and four stars representing the proposed lunar city nodes.</desc>
+  <defs>
+    <radialGradient id="space" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#10285c"/>
+      <stop offset="0.72" stop-color="#06122e"/>
+      <stop offset="1" stop-color="#020611"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4d56f"/>
+      <stop offset="0.48" stop-color="#c9a227"/>
+      <stop offset="1" stop-color="#8d6c08"/>
+    </linearGradient>
+  </defs>
+  <circle cx="360" cy="360" r="344" fill="#06122e"/>
+  <circle cx="360" cy="360" r="318" fill="url(#space)" stroke="url(#gold)" stroke-width="8"/>
+  <circle cx="360" cy="360" r="282" fill="none" stroke="#f4f1e8" stroke-opacity=".22" stroke-width="2"/>
+  <path d="M126 412c78-68 160-102 246-102 80 0 155 29 222 86-52 84-130 132-234 132-103 0-181-39-234-116Z" fill="#cfd4de" opacity=".95"/>
+  <path d="M126 412c78-68 160-102 246-102 80 0 155 29 222 86" fill="none" stroke="#f4f1e8" stroke-width="5" stroke-linecap="round"/>
+  <path d="M182 450c48-20 86-28 116-24 35 5 70 25 106 24 43-1 82-26 136-12" fill="none" stroke="#6b7282" stroke-width="7" stroke-linecap="round" opacity=".58"/>
+  <path d="M154 306c118-118 255-142 410-72" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M158 308 142 274l38 10Z" fill="#c9a227"/>
+  <g fill="#f4d56f">
+    <path d="M248 224 257 244 279 246 262 260 267 282 248 270 229 282 234 260 217 246 239 244Z"/>
+    <path d="M360 178 369 198 391 200 374 214 379 236 360 224 341 236 346 214 329 200 351 198Z"/>
+    <path d="M472 224 481 244 503 246 486 260 491 282 472 270 453 282 458 260 441 246 463 244Z"/>
+    <path d="M360 108 367 124 384 126 371 137 375 154 360 145 345 154 349 137 336 126 353 124Z"/>
+  </g>
+  <g fill="none" stroke="#f4f1e8" stroke-opacity=".35" stroke-width="2">
+    <circle cx="360" cy="360" r="198"/>
+    <path d="M360 162v96M360 462v96M162 360h96M462 360h96"/>
+  </g>
+  <text x="360" y="612" text-anchor="middle" fill="#f4f1e8" font-family="Georgia, serif" font-size="34" font-weight="700" letter-spacing="4">LUNAR ADMINISTRATION</text>
+  <text x="360" y="650" text-anchor="middle" fill="#c9a227" font-family="Consolas, monospace" font-size="18" letter-spacing="6">PROPOSED GOVERNANCE CONCEPT</text>
+</svg>

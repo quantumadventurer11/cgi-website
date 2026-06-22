@@ -4,12 +4,13 @@ Production website and membership application backend for the Celestial Governan
 
 ## What Is Included
 
-- Single-page public website presenting CGI's mission, active projects, governance framework, and membership pathway.
+- Multi-page public website presenting CGI's mission, research library, project pages, topic explainers, governance framework, contributor functions, FAQ, glossary, and membership pathway.
 - Node.js + Express API for membership applications.
 - Durable Neon Postgres support for Vercel, with SQLite persistence through `better-sqlite3` for local development and Docker.
 - Nodemailer notification and applicant confirmation emails, with console fallback in development.
 - Protected named-account admin API and admin interface at `/admin.html`.
 - Automated backend tests with Node's built-in test runner.
+- SEO basics for public pages, including canonical URLs, sitemap, robots file, Open Graph metadata, Twitter card metadata, and structured data where appropriate.
 
 ## Local Development
 
@@ -26,9 +27,17 @@ The site runs at `http://localhost:3000`. The API health check is available at `
 ```bash
 npm audit --audit-level=high
 npm test
+npm run seo:check
+npm run smoke:lunar
 ```
 
-The automated test suite covers health checks, public application validation, honeypot rejection, persistence, admin authentication, admin listing, and status updates.
+The automated test suite covers health checks, public routes, legacy redirects, public application validation, honeypot rejection, persistence, admin authentication, admin listing, and status updates.
+
+The SEO check verifies public page titles, descriptions, canonical tags, social metadata, sitemap inclusion, crawlable links, and absence of legacy organization references.
+
+The Lunar smoke test opens `/projects/lunar` in Playwright, verifies the Three.js canvas renders nonblank pixels on desktop and mobile, checks the sustainability section, and writes local screenshots to `.tmp/`.
+
+The Lunar Project viewer uses local browser-ready NASA Scientific Visualization Studio CGI Moon Kit assets in `public/assets/moon/`. City positions are based on the CGI Q3 2026 Strategic Briefing and use planetocentric, east-positive lunar coordinates with NASA's 1737.4 km reference radius. Optimized local city GLB assets live in `public/assets/models/lunar/`; regenerate them with `node scripts/generate-lunar-models.mjs` and keep each city asset below roughly 500 KB.
 
 ## Environment
 
@@ -87,10 +96,39 @@ Recommended production checklist:
 - Restrict firewall access to ports 80/443 plus SSH.
 - Configure backups for the database.
 - Run `npm audit --audit-level=high` and `npm test` before deployment.
+- Run `npm run seo:check` before deployment.
 
 For reliable confirmation email delivery, configure SPF and DKIM for the sending domain used in `MAIL_FROM`.
 
 The `public/` folder can also be deployed as a static-only fallback on GitHub Pages, Netlify, or similar hosts. In that mode, the application form will not persist submissions, but the mailto fallback to `contact@celestialgovernance.org` remains available.
+
+## Public Site Architecture
+
+Core public routes are:
+
+- `/` for the homepage.
+- `/research` for the research library.
+- `/projects/ostgap` and `/projects/lunar` for active project pages.
+- `/publications/ostgap-report` for the OSTGAP publication landing page and citation block.
+- `/topics` plus topic guides for outer space governance, treaty gaps, lunar governance, COPUOS policy, space resources governance, space settlement governance, and Articles II, VI, and IX.
+- `/insights` plus short explainers.
+- `/about`, `/team`, `/join`, `/glossary`, and `/faq`.
+
+When adding or renaming a public page:
+
+- Add a unique `<title>`, meta description, canonical URL, Open Graph metadata, and Twitter card metadata.
+- Add the route to `public/sitemap.xml`.
+- Add crawlable links from related pages.
+- Add or update JSON-LD when the page is an article, report, organization page, or nested content page.
+- Add route coverage to `test/api.test.js` when the page is a core public route.
+- Run `npm run seo:check`.
+- Run `npm run smoke:lunar` after changes to the Lunar Project page, Three.js viewer, or core layout styles.
+
+Legacy redirects for removed `.html` paths live in `src/app.js` and should be kept when a public URL changes.
+
+## Search Console And Launch Metrics
+
+After production deployment, submit `https://celestialgovernance.org/sitemap.xml` in Google Search Console. Track indexed pages, impressions, clicks, top queries, membership form submissions, and report downloads after launch.
 
 ## Governance Alignment
 

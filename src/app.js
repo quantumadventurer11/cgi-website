@@ -41,9 +41,36 @@ app.get("/api/health", (req, res) => {
   res.json({ ok: true });
 });
 
+const legacyRedirects = {
+  "/research.html": "/research",
+  "/join.html": "/join",
+  "/contact.html": "/join",
+  "/lunar.html": "/projects/lunar",
+  "/ostgap.html": "/projects/ostgap",
+  "/team.html": "/team"
+};
+
+Object.entries(legacyRedirects).forEach(([from, to]) => {
+  app.get(from, (req, res) => {
+    res.redirect(301, to);
+  });
+});
+
 app.use("/api/applications", applicationsRouter);
 app.use("/api/admin", adminRouter);
-app.use(express.static(path.join(__dirname, "..", "public")));
+
+app.get("/topics", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "topics.html"));
+});
+
+app.get("/insights", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "insights.html"));
+});
+
+app.use(express.static(path.join(__dirname, "..", "public"), {
+  extensions: ["html"],
+  maxAge: process.env.NODE_ENV === "production" ? "1h" : 0
+}));
 
 app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) {
