@@ -162,7 +162,7 @@
 
     function draw() {
       context.clearRect(0, 0, width, height);
-      context.fillStyle = "#06122E";
+      context.fillStyle = "#050505";
       context.fillRect(0, 0, width, height);
       stars.forEach((star) => {
         star.y += star.speed;

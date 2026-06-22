@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
   <title id="title">Celestial Governance Initiative logo</title>
   <desc id="desc">A gold orbital mark surrounding a central governance star.</desc>
-  <rect width="128" height="128" rx="24" fill="#06122E"/>
+  <rect width="128" height="128" rx="24" fill="#050505"/>
   <circle cx="64" cy="64" r="34" fill="none" stroke="#C9A227" stroke-width="4"/>
   <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#C9A227" stroke-width="3" transform="rotate(-24 64 64)"/>
   <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#F4F1E8" stroke-opacity=".62" stroke-width="2" transform="rotate(24 64 64)"/>
