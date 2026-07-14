@@ -1,7 +1,7 @@
 {
   "name": "cgi-website",
   "version": "1.0.0",
-  "description": "Celestial Governance Initiative public website and membership application backend.",
+  "description": "Celestial Governance Institute public website and membership application backend.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -9,7 +9,8 @@
     "create-admin": "node scripts/create-admin.js",
     "test": "node --test test/api.test.js",
     "seo:check": "node scripts/seo-check.js",
-    "smoke:lunar": "node scripts/lunar-smoke.js"
+    "smoke:lunar": "node scripts/lunar-smoke.js",
+    "accessibility:check": "node scripts/accessibility-check.js"
   },
   "keywords": [
     "cgi",
@@ -17,7 +18,7 @@
     "express",
     "sqlite"
   ],
-  "author": "Celestial Governance Initiative",
+  "author": "Celestial Governance Institute",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=20 <25"

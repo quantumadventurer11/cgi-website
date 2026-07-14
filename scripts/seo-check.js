@@ -4,6 +4,7 @@ const path = require("node:path");
 const root = path.join(__dirname, "..");
 const publicDir = path.join(root, "public");
 const siteUrl = "https://celestialgovernance.org";
+const socialImage = siteUrl + "/assets/social-preview.svg";
 
 const pages = [
   ["/", "index.html"],
@@ -41,18 +42,21 @@ const forbiddenTerms = [
   ["cgi", ["dfh", "org", "il"].join(".")].join("@")
 ];
 
-const breadcrumbRoutes = new Set(
-  pages
-    .map(([route]) => route)
-    .filter((route) => route.split("/").filter(Boolean).length > 1)
-);
-
+const breadcrumbRoutes = new Set(pages.map(([route]) => route).filter((route) => route.split("/").filter(Boolean).length > 1));
 const articleRoutes = new Set([
   "/publications/ostgap-report",
   "/insights/what-is-outer-space-governance",
   "/insights/outer-space-treaty-gaps",
   "/insights/why-lunar-governance-matters"
 ]);
+
+const requiredSharedMeta = [
+  ["og:site_name", "<meta property=\"og:site_name\" content=\"Celestial Governance Institute\">"] ,
+  ["og:locale", "<meta property=\"og:locale\" content=\"en_US\">"] ,
+  ["og:image", "<meta property=\"og:image\" content=\"" + socialImage + "\">"] ,
+  ["twitter:image", "<meta name=\"twitter:image\" content=\"" + socialImage + "\">"] ,
+  ["theme-color", "<meta name=\"theme-color\" content=\"#050505\">"]
+];
 
 const failures = [];
 
@@ -61,58 +65,45 @@ function readPublic(filePath) {
 }
 
 function expectedCanonical(route) {
-  return route === "/" ? `${siteUrl}/` : `${siteUrl}${route}`;
+  return route === "/" ? siteUrl + "/" : siteUrl + route;
 }
 
 for (const [route, filePath] of pages) {
   const fullPath = path.join(publicDir, filePath);
-  if (!fs.existsSync(fullPath)) {
-    failures.push(`${route}: missing ${filePath}`);
-    continue;
-  }
-
+  if (!fs.existsSync(fullPath)) { failures.push(route + ": missing " + filePath); continue; }
   const html = readPublic(filePath);
   const h1Count = (html.match(/<h1\b/gi) || []).length;
-  if (h1Count !== 1) failures.push(`${route}: expected one h1, found ${h1Count}`);
-  if (!/<title>[^<]{12,}<\/title>/i.test(html)) failures.push(`${route}: missing useful title`);
-  if (!/<meta\s+name="description"\s+content="[^"]{50,}"/i.test(html)) failures.push(`${route}: missing useful meta description`);
-
+  if (h1Count !== 1) failures.push(route + ": expected one h1, found " + h1Count);
+  if (!/<title>[^<]{12,}<\/title>/i.test(html)) failures.push(route + ": missing useful title");
+  if (!/<meta\s+name="description"\s+content="[^"]{50,}"/i.test(html)) failures.push(route + ": missing useful meta description");
   const canonical = expectedCanonical(route);
-  if (!html.includes(`<link rel="canonical" href="${canonical}">`)) {
-    failures.push(`${route}: missing canonical ${canonical}`);
-  }
-
-  if (!/<meta\s+property="og:title"\s+content="/i.test(html)) failures.push(`${route}: missing og:title`);
-  if (!/<meta\s+property="og:description"\s+content="/i.test(html)) failures.push(`${route}: missing og:description`);
-  if (!/<meta\s+name="twitter:card"\s+content="/i.test(html)) failures.push(`${route}: missing twitter card`);
-  if (!/<a\s+[^>]*href="\/[^"]*"/i.test(html)) failures.push(`${route}: missing crawlable internal link`);
-  if (breadcrumbRoutes.has(route) && !html.includes("\"@type\":\"BreadcrumbList\"") && !html.includes("\"@type\": \"BreadcrumbList\"")) {
-    failures.push(`${route}: missing BreadcrumbList JSON-LD`);
-  }
-  if (articleRoutes.has(route) && !html.includes("\"@type\":\"Article\"") && !html.includes("\"@type\": \"Article\"")) {
-    failures.push(`${route}: missing Article JSON-LD`);
-  }
-
-  for (const term of forbiddenTerms) {
-    if (html.includes(term)) failures.push(`${route}: forbidden legacy term ${term}`);
-  }
+  if (!html.includes("<link rel=\"canonical\" href=\"" + canonical + "\">")) failures.push(route + ": missing canonical " + canonical);
+  if (!/<meta\s+property="og:title"\s+content="/i.test(html)) failures.push(route + ": missing og:title");
+  if (!/<meta\s+property="og:description"\s+content="/i.test(html)) failures.push(route + ": missing og:description");
+  if (!/<meta\s+property="og:image:alt"\s+content="[^"]{12,}"/i.test(html)) failures.push(route + ": missing og:image:alt");
+  if (!/<meta\s+name="twitter:card"\s+content="/i.test(html)) failures.push(route + ": missing twitter card");
+  if (!/<meta\s+name="twitter:image:alt"\s+content="[^"]{12,}"/i.test(html)) failures.push(route + ": missing twitter:image:alt");
+  for (const [name, markup] of requiredSharedMeta) if (!html.includes(markup)) failures.push(route + ": missing " + name);
+  if (!/<a\s+[^>]*href="\/[^"]*"/i.test(html)) failures.push(route + ": missing crawlable internal link");
+  if (breadcrumbRoutes.has(route) && !html.includes("\"@type\":\"BreadcrumbList\"") && !html.includes("\"@type\": \"BreadcrumbList\"")) failures.push(route + ": missing BreadcrumbList JSON-LD");
+  if (articleRoutes.has(route) && !html.includes("\"@type\":\"Article\"") && !html.includes("\"@type\": \"Article\"")) failures.push(route + ": missing Article JSON-LD");
+  for (const term of forbiddenTerms) if (html.includes(term)) failures.push(route + ": forbidden legacy term " + term);
 }
 
 const sitemap = readPublic("sitemap.xml");
 for (const [route] of pages) {
-  const loc = `<loc>${expectedCanonical(route)}</loc>`;
-  if (!sitemap.includes(loc)) failures.push(`sitemap: missing ${loc}`);
+  const loc = "<loc>" + expectedCanonical(route) + "</loc>";
+  if (!sitemap.includes(loc)) failures.push("sitemap: missing " + loc);
 }
 
 const robots = readPublic("robots.txt");
-if (!robots.includes("Sitemap: https://celestialgovernance.org/sitemap.xml")) {
-  failures.push("robots.txt: missing sitemap reference");
-}
+if (!robots.includes("Sitemap: https://celestialgovernance.org/sitemap.xml")) failures.push("robots.txt: missing sitemap reference");
+if (!fs.existsSync(path.join(publicDir, "assets", "social-preview.svg"))) failures.push("assets: missing social preview image");
 
 if (failures.length > 0) {
   console.error("SEO check failed:");
-  for (const failure of failures) console.error(`- ${failure}`);
+  for (const failure of failures) console.error("- " + failure);
   process.exit(1);
 }
 
-console.log(`SEO check passed for ${pages.length} public pages.`);
+console.log("SEO check passed for " + pages.length + " public pages.");

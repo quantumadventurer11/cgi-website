@@ -1,6 +1,6 @@
-# Celestial Governance Initiative Website
+# Celestial Governance Institute Website
 
-Production website and membership application backend for the Celestial Governance Initiative (CGI), a research and policy institute for the governance of outer space.
+Production website and membership application backend for the Celestial Governance Institute (CGI), an independent, non-commercial research and policy institute for the governance of outer space. CGI is organizing toward Nova Scotia and federal Canadian not-for-profit registration.
 
 ## What Is Included
 

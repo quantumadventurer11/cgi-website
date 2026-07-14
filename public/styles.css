@@ -2637,3 +2637,157 @@ body,
     font-size: clamp(2rem, 10vw, 2.9rem);
   }
 }
+
+
+/* Readability and keyboard focus hardening. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+.city-chip:focus-visible {
+  outline: 3px solid var(--color-gold-hover);
+  outline-offset: 4px;
+}
+
+.lunar-first-principles {
+  background: #f7f3e8;
+  color: #14203d;
+}
+
+.lunar-first-principles .section-heading,
+.lunar-first-principles .section-heading h2,
+.lunar-first-principles .section-heading p {
+  color: #14203d;
+  opacity: 1;
+}
+
+.lunar-first-principles .section-kicker {
+  color: #8d6c08;
+}
+
+.lunar-first-principles .principle-grid .research-card {
+  color: #f4f1e8;
+  border-color: rgba(244, 241, 232, 0.16);
+  background:
+    radial-gradient(circle at top right, rgba(201, 162, 39, 0.1), transparent 34%),
+    #111214;
+}
+
+.lunar-first-principles .principle-grid .research-card h3 {
+  color: #fffdf7;
+}
+
+.lunar-first-principles .principle-grid .research-card p {
+  color: rgba(244, 241, 232, 0.82);
+}
+
+.lunar-first-principles .label-tag {
+  border-color: rgba(201, 162, 39, 0.46);
+  color: #e3be45;
+  background: rgba(201, 162, 39, 0.08);
+}
+
+/* Accessibility contrast pass for production readiness. */
+.nav-links .nav-cta[aria-current="page"],
+.nav-links .nav-cta,
+.nav-cta,
+.button-primary {
+  color: #050505;
+}
+
+.button-ink {
+  color: #f4f1e8;
+  background: rgba(244, 241, 232, 0.06);
+}
+
+.button-ink:hover,
+.button-ink:focus-visible {
+  color: #050505;
+  background: var(--color-gold-hover);
+}
+
+.label-tag,
+.project-code,
+.status-tag,
+.network-node span,
+.admin-dashboard span,
+.sustainability-grid span {
+  color: #f0c84f;
+}
+
+.admin-dashboard article,
+.sustainability-grid article,
+.research-card,
+.side-panel,
+.profile-card,
+.faq-list details,
+.glossary-list article,
+.publication-feature,
+.application-card,
+.join-aside,
+.citation-block,
+.download-block {
+  background-color: #111214;
+}
+
+.admin-dashboard h3,
+.admin-dashboard p,
+.admin-dashboard span {
+  opacity: 1;
+}
+
+.admin-dashboard h3 {
+  color: #fffdf7;
+}
+
+.admin-dashboard p {
+  color: rgba(244, 241, 232, 0.82);
+}
+
+.application-form {
+  color: #111214;
+  background: #fffdf7;
+}
+
+.application-form label,
+.application-form .form-note,
+.application-form .form-status {
+  color: #111214;
+}
+
+.application-form input,
+.application-form select,
+.application-form textarea {
+  color: #111214;
+  background: #ffffff;
+}
+
+/* Opaque interactive surfaces for reliable contrast. */
+.nav-cta,
+.button-primary,
+a.button-primary {
+  color: #050505 !important;
+  background: #d2aa2d !important;
+  background-color: #d2aa2d !important;
+}
+
+.button-ink,
+a.button-ink,
+.label-tag {
+  color: #f4f1e8 !important;
+  background: #1b1d21 !important;
+  background-color: #1b1d21 !important;
+  border-color: rgba(244, 241, 232, 0.22);
+}
+
+.label-tag {
+  color: #f0c84f !important;
+}
+
+.lunar-first-principles .label-tag {
+  color: #f0c84f !important;
+  background: #111214 !important;
+  background-color: #111214 !important;
+}

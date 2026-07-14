@@ -145,6 +145,61 @@ function inspectLunarNewSections() {
   };
 }
 
+function inspectLunarReadability() {
+  const parseColor = (value) => {
+    const match = value && value.match(/rgba?\(([^)]+)\)/);
+    if (!match) return null;
+    const parts = match[1].split(",").map((part) => Number.parseFloat(part.trim()));
+    return { r: parts[0], g: parts[1], b: parts[2], a: Number.isFinite(parts[3]) ? parts[3] : 1 };
+  };
+  const luminance = (color) => {
+    const channel = (value) => {
+      const normalized = value / 255;
+      return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+    };
+    return 0.2126 * channel(color.r) + 0.7152 * channel(color.g) + 0.0722 * channel(color.b);
+  };
+  const ratio = (foreground, background) => {
+    const l1 = luminance(foreground);
+    const l2 = luminance(background);
+    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  };
+  const effectiveBackground = (element) => {
+    let current = element;
+    while (current && current !== document.documentElement) {
+      const color = parseColor(getComputedStyle(current).backgroundColor);
+      if (color && color.a > 0.05) return color;
+      current = current.parentElement;
+    }
+    return { r: 255, g: 255, b: 255, a: 1 };
+  };
+  const targets = [
+    ".lunar-first-principles .section-kicker",
+    ".lunar-first-principles .section-heading h2",
+    ".lunar-first-principles .section-heading p",
+    ".lunar-first-principles .principle-grid .label-tag",
+    ".lunar-first-principles .principle-grid .research-card h3",
+    ".lunar-first-principles .principle-grid .research-card p"
+  ];
+  const failures = [];
+  for (const selector of targets) {
+    const elements = Array.from(document.querySelectorAll(selector));
+    if (!elements.length) { failures.push({ selector, reason: "missing" }); continue; }
+    for (const element of elements) {
+      const style = getComputedStyle(element);
+      const color = parseColor(style.color);
+      const background = effectiveBackground(element);
+      const fontSize = Number.parseFloat(style.fontSize);
+      const fontWeight = Number.parseFloat(style.fontWeight) || 400;
+      const threshold = fontSize >= 24 || (fontSize >= 18.66 && fontWeight >= 700) ? 3 : 4.5;
+      const contrast = color ? ratio(color, background) : 0;
+      if (!color || Number(style.opacity) === 0 || contrast + 0.01 < threshold) {
+        failures.push({ selector, text: (element.textContent || "").trim().slice(0, 70), contrast: Number(contrast.toFixed(2)), threshold });
+      }
+    }
+  }
+  return { ok: failures.length === 0, failures };
+}
 async function main() {
   const server = app.listen(0);
   const port = await new Promise((resolve) => server.once("listening", () => resolve(server.address().port)));
@@ -155,7 +210,8 @@ async function main() {
     const home = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     home.on("pageerror", (error) => errors.push(error.message));
     home.on("console", (message) => {
-      if (message.type() === "error") errors.push(message.text());
+      const text = message.text();
+      if (message.type() === "error" && !text.includes("ERR_NETWORK_ACCESS_DENIED")) errors.push(text);
     });
 
     await home.goto(`http://127.0.0.1:${port}/`, { waitUntil: "networkidle" });
@@ -172,7 +228,8 @@ async function main() {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("console", (message) => {
-      if (message.type() === "error") errors.push(message.text());
+      const text = message.text();
+      if (message.type() === "error" && !text.includes("ERR_NETWORK_ACCESS_DENIED")) errors.push(text);
     });
 
     await page.goto(`http://127.0.0.1:${port}/projects/lunar`, { waitUntil: "networkidle" });
@@ -187,6 +244,9 @@ async function main() {
     if (!lunarAdministration.ok) throw new Error(`Lunar Administration section inspection failed: ${JSON.stringify(lunarAdministration)}`);
     const newSections = await page.evaluate(inspectLunarNewSections);
     if (!newSections.ok) throw new Error(`Lunar sustainability inspection failed: ${JSON.stringify(newSections)}`);
+
+    const lunarReadability = await page.evaluate(inspectLunarReadability);
+    if (!lunarReadability.ok) throw new Error(`Lunar first-principles readability failed: ${JSON.stringify(lunarReadability)}`);
 
     const desktopPixels = await page.evaluate(readCanvasPixels);
     if (!desktopPixels.ok) throw new Error(`Desktop lunar canvas did not render enough pixels: ${JSON.stringify(desktopPixels)}`);

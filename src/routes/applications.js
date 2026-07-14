@@ -40,10 +40,10 @@ function buildConfirmationEmail(application) {
     text: [
       `Dear ${application.fullName},`,
       "",
-      "Thank you for your interest in the Celestial Governance Initiative.",
+      "Thank you for your interest in the Celestial Governance Institute. CGI is an independent research and policy institute organizing toward Canadian not-for-profit registration.",
       "Your application has been received. The team will review your interest and route it toward an appropriate project or general membership path.",
       "",
-      "Celestial Governance Initiative",
+      "Celestial Governance Institute",
       "contact@celestialgovernance.org"
     ].join("\n")
   };
