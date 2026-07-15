@@ -1,23 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">Celestial Governance Institute social preview</title>
-  <desc id="desc">Abstract orbital governance mark with the Celestial Governance Institute name and research positioning.</desc>
-  <rect width="1200" height="630" fill="#050505"/>
-  <radialGradient id="g" cx="72%" cy="42%" r="54%">
-    <stop offset="0" stop-color="#C9A227" stop-opacity="0.34"/>
-    <stop offset="0.44" stop-color="#111214" stop-opacity="0.4"/>
-    <stop offset="1" stop-color="#050505" stop-opacity="0"/>
-  </radialGradient>
-  <rect width="1200" height="630" fill="url(#g)"/>
-  <g transform="translate(92 108)" fill="none">
-    <rect width="118" height="118" rx="22" fill="#0b0b0c" stroke="#C9A227" stroke-opacity="0.62"/>
-    <circle cx="59" cy="59" r="31" stroke="#C9A227" stroke-width="4"/>
-    <ellipse cx="59" cy="59" rx="50" ry="18" stroke="#C9A227" stroke-width="3" transform="rotate(-24 59 59)"/>
-    <ellipse cx="59" cy="59" rx="50" ry="18" stroke="#F4F1E8" stroke-opacity="0.58" stroke-width="2" transform="rotate(24 59 59)"/>
-    <path fill="#C9A227" d="M59 34l6.4 18.2L84 59l-18.6 6.8L59 84l-6.4-18.2L34 59l18.6-6.8L59 34z"/>
+  <desc id="desc">Deep navy Celestial Governance Institute seal and formal research positioning on a white field.</desc>
+  <rect width="1200" height="630" fill="#fffdf8"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#d8d1c2" stroke-width="2"/>
+  <g transform="translate(96 78)" fill="none" stroke="#061b42" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="112" cy="96" r="78" stroke-width="8"/>
+    <path d="M36 94c7 58 44 92 76 92s69-34 76-92" stroke-width="8"/>
+    <path d="M42 145c35-52 82-78 142-57" stroke-width="6"/>
+    <path d="M182 145c-35-52-82-78-142-57" stroke-width="6"/>
+    <path d="M112 62c-2 40-17 73-54 106" stroke-width="8"/>
+    <path d="M112 62c2 40 17 73 54 106" stroke-width="8"/>
+    <circle cx="112" cy="44" r="13" fill="#061b42" stroke="none"/>
   </g>
-  <text x="92" y="288" fill="#C9A227" font-family="IBM Plex Mono, Consolas, monospace" font-size="20" letter-spacing="3">INDEPENDENT RESEARCH AND POLICY ANALYSIS</text>
-  <text x="92" y="372" fill="#F4F1E8" font-family="Cormorant Garamond, Georgia, serif" font-size="72" font-weight="600">Celestial Governance Institute</text>
-  <text x="92" y="430" fill="#A7ABB2" font-family="Raleway, Arial, sans-serif" font-size="30">Outer-space governance, treaty analysis, and lunar institutional design.</text>
-  <line x1="92" y1="500" x2="1108" y2="500" stroke="#C9A227" stroke-opacity="0.55"/>
-  <text x="92" y="548" fill="#F4F1E8" fill-opacity="0.78" font-family="Raleway, Arial, sans-serif" font-size="24">celestialgovernance.org</text>
+  <text x="96" y="330" fill="#061b42" font-family="Cormorant Garamond, Georgia, serif" font-size="78" font-weight="600">Celestial Governance Institute</text>
+  <text x="96" y="384" fill="#31425f" font-family="Raleway, Arial, sans-serif" font-size="27">Research and policy analysis for outer space governance.</text>
+  <line x1="96" y1="438" x2="1104" y2="438" stroke="#061b42" stroke-opacity="0.35"/>
+  <text x="96" y="494" fill="#061b42" font-family="IBM Plex Mono, Consolas, monospace" font-size="24" letter-spacing="2">OSTGAP  /  LUNAR PROJECT  /  GOLDEN DOME LEGAL ANALYSIS</text>
+  <text x="96" y="548" fill="#31425f" font-family="Raleway, Arial, sans-serif" font-size="22">celestialgovernance.org</text>
 </svg>

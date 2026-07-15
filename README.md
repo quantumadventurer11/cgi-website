@@ -1,6 +1,6 @@
 # Celestial Governance Institute Website
 
-Production website and membership application backend for the Celestial Governance Institute (CGI), an independent, non-commercial research and policy institute for the governance of outer space. CGI is organizing toward Nova Scotia and federal Canadian not-for-profit registration.
+Production website and membership application backend for the Celestial Governance Institute (CGI), a research and policy analysis organization focused on the governance of outer space.
 
 ## What Is Included
 
@@ -108,7 +108,7 @@ Core public routes are:
 
 - `/` for the homepage.
 - `/research` for the research library.
-- `/projects/ostgap` and `/projects/lunar` for active project pages.
+- `/projects/ostgap`, `/projects/lunar`, and `/projects/golden-dome` for public project pages.
 - `/publications/ostgap-report` for the OSTGAP publication landing page and citation block.
 - `/topics` plus topic guides for outer space governance, treaty gaps, lunar governance, COPUOS policy, space resources governance, space settlement governance, and Articles II, VI, and IX.
 - `/insights` plus short explainers.

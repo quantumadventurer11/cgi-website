@@ -1,6 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CGI">
-  <rect width="64" height="64" rx="12" fill="#050505"/>
-  <circle cx="32" cy="32" r="18" fill="none" stroke="#C9A227" stroke-width="3"/>
-  <path d="M16 34c9-9 23-11 36-5" fill="none" stroke="#F4F1E8" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="42" cy="22" r="3" fill="#C9A227"/>
+  <rect width="64" height="64" rx="8" fill="#fffdf8"/>
+  <g fill="none" stroke="#061b42" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="28" r="23" stroke-width="3.5"/>
+    <path d="M10 43c12-19 28-27 44-18" stroke-width="3"/>
+    <path d="M54 43c-12-19-28-27-44-18" stroke-width="3"/>
+    <path d="M32 18c-.5 13-6 24-18 35" stroke-width="3.5"/>
+    <path d="M32 18c.5 13 6 24 18 35" stroke-width="3.5"/>
+  </g>
+  <circle cx="32" cy="15" r="4" fill="#061b42"/>
 </svg>

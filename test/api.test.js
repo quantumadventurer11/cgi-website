@@ -31,6 +31,7 @@ test("public routes return successful responses", async () => {
     "/research",
     "/projects/ostgap",
     "/projects/lunar",
+    "/projects/golden-dome",
     "/topics",
     "/join",
     "/robots.txt",

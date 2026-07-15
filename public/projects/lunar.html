@@ -17,7 +17,7 @@
   <meta property="og:image:alt" content="Celestial Governance Institute social preview">
   <meta name="twitter:image" content="https://celestialgovernance.org/assets/social-preview.svg">
   <meta name="twitter:image:alt" content="Celestial Governance Institute social preview">
-  <meta name="theme-color" content="#050505">
+  <meta name="theme-color" content="#061b42">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Lunar Administration Concept","author":{"@type":"Organization","name":"Celestial Governance Institute"},"mainEntityOfPage":"https://celestialgovernance.org/projects/lunar"}</script>
@@ -28,19 +28,23 @@
   <div class="scroll-progress" data-scroll-progress></div>
   <header class="site-header" data-header>
     <nav class="nav-shell" aria-label="Primary navigation">
-      <a class="brand" href="/" aria-label="Celestial Governance Institute home"><img class="brand-mark" src="/logo.svg" alt="" width="48" height="48"><span>Celestial Governance Institute</span></a>
-      <div class="nav-links"><a href="/research">Research</a><a href="/projects/lunar" aria-current="page">Lunar Project</a><a href="/projects/ostgap">OSTGAP</a><a href="/about">Governance</a><a href="/join" class="nav-cta">Join</a></div>
-    </nav>
+      <a class="brand" href="/" aria-label="Celestial Governance Institute home"><img class="brand-mark" src="/assets/cgi-logo-mark-transparent.png" alt="" width="72" height="72"><span>Celestial Governance Institute</span></a>
+      <div class="nav-links"><a href="/research">Research</a><a href="/projects/ostgap">OSTGAP</a><a href="/projects/lunar">Lunar Project</a><a href="/projects/golden-dome">Golden Dome</a><a href="/join" class="nav-cta">Join</a></div></nav>
   </header>
   <main id="main">
-    <section class="lunar-hero" aria-labelledby="lunar-title">
+    <section class="lunar-hero" aria-labelledby="lunar-title" data-scroll-theme="lunar">
+      <div class="hero-media hero-media-lunar" aria-hidden="true">
+        <video class="hero-video" autoplay muted loop playsinline poster="/assets/cgi-lunar-operations-poster.png"></video>
+        <img src="/assets/cgi-lunar-operations-poster.png" alt="" loading="eager">
+        <span class="media-orbit media-orbit-one"></span>
+      </div>
       <div class="lunar-hero-copy">
         <p class="eyebrow">Lunar Administration Concept</p>
         <h1 id="lunar-title">A treaty-grade system for the Moon.</h1>
         <p class="hero-tagline">A proposed administration model for access, safety, infrastructure, science protection, records, and dispute intake.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#lunar-model">Enter the model</a>
-          <a class="button button-secondary" href="#lunar-administration">View administration</a>
+          <a class="button button-secondary" href="#mission-control">Mission control panel</a>
         </div>
       </div>
       <div class="lunar-brief-card" aria-label="Lunar Project executive brief">
@@ -53,7 +57,42 @@
       </div>
     </section>
 
-    <section class="section lunar-model-section" id="lunar-model">
+    <section class="section mission-control-section" id="mission-control" data-scroll-theme="lunar">
+      <div class="section-heading">
+        <p class="section-kicker">Interactive component</p>
+        <h2>Mission-control simulation panel.</h2>
+        <p>Inspired by MoonDAO's Lunar Colony Digital Simulator, this CGI panel is a public-facing research interface for governance questions around rovers, base operations, telemetry, and mission assurance. CGI is not affiliated with MoonDAO.</p>
+      </div>
+      <div class="mission-control-grid" data-lunar-mission-control>
+        <div class="mode-switcher" role="tablist" aria-label="Mission control simulation mode">
+          <button class="mode-button is-active" type="button" role="tab" aria-selected="true" data-mode="rover">Rover operations</button>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="base">Base systems</button>
+          <button class="mode-button" type="button" role="tab" aria-selected="false" data-mode="governance">Governance queue</button>
+        </div>
+        <div class="telemetry-board">
+          <article><span>Mode</span><strong data-mission-mode>Rover traverse</strong></article>
+          <article><span>Signal</span><strong data-mission-signal>8.4 s delay</strong></article>
+          <article><span>Power</span><strong data-mission-power>72%</strong></article>
+          <article><span>Risk</span><strong data-mission-risk>Dust corridor review</strong></article>
+        </div>
+        <div class="mission-visual" aria-label="Abstract lunar operations panel">
+          <span class="surface-line"></span>
+          <span class="rover-node"></span>
+          <span class="base-node"></span>
+          <span class="signal-line"></span>
+        </div>
+        <div class="source-panel">
+          <h3>External simulator reference</h3>
+          <p>MoonDAO describes LunCoSim as a web-based collaborative lunar mission engineering simulator with rover control, realistic physics, and command interfaces. CGI references it as a design inspiration only.</p>
+          <a class="dark-link" href="https://www.moondao.com/project/248">MoonDAO Project 248</a>
+          <a class="dark-link" href="https://alpha.lunco.space">LunCoSim alpha</a>
+          <a class="dark-link" href="https://github.com/LunCoSim/lunco-sim/">LunCoSim repository</a>
+          <a class="dark-link" href="https://github.com/LunCoSim/lunco-sim/tree/main/specs">Specification and roadmap</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lunar-model-section" id="lunar-model" data-scroll-theme="lunar">
       <div class="section-heading">
         <p class="section-kicker">Interactive model</p>
         <h2>Explore the proposed lunar governance network.</h2>
@@ -88,7 +127,7 @@
       </div>
     </section>
 
-    <section class="section lunar-network-section">
+    <section class="section lunar-network-section" data-scroll-theme="paper">
       <div class="section-heading">
         <p class="section-kicker">City network</p>
         <h2>Four proposed nodes. Four governance stress tests.</h2>
@@ -102,7 +141,7 @@
       </div>
     </section>
 
-    <section class="section lunar-admin-section" id="lunar-administration">
+    <section class="section lunar-admin-section" id="lunar-administration" data-scroll-theme="paper">
       <div class="lunar-admin-identity">
         <img src="/assets/lunar-administration-seal.svg" alt="Hypothetical Lunar Administration concept seal with lunar horizon, orbital arc, and four node stars" width="360" height="360">
         <div>
@@ -124,7 +163,7 @@
       </div>
     </section>
 
-    <section class="section sustainability-section" id="sustainable-operations">
+    <section class="section sustainability-section" id="sustainable-operations" data-scroll-theme="navy">
       <div class="section-heading">
         <p class="section-kicker">Sustainable space operations</p>
         <h2>Governance that keeps the operating environment usable.</h2>
@@ -169,7 +208,42 @@
       </div>
     </section>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><p><a href="/research">Research</a> · <a href="/projects/lunar">Lunar Project</a> · <a href="/projects/ostgap">OSTGAP</a> · <a href="/about">Governance</a> · <a href="/join">Join</a></p><p>Celestial Governance Institute · Independent research and policy analysis. Organizing toward Nova Scotia and federal Canadian not-for-profit registration.</p></div></footer>
+  <footer class="site-footer institutional-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="/assets/cgi-logo-mark-transparent.png" alt="" width="72" height="72">
+        <div>
+          <strong>Celestial Governance Institute</strong>
+          <p>Research and policy analysis for outer space governance.</p>
+        </div>
+      </div>
+      <nav class="footer-link-grid" aria-label="Footer navigation">
+        <section>
+          <h2>Research</h2>
+          <a href="/research">Research index</a>
+          <a href="/projects/ostgap">OSTGAP</a>
+          <a href="/projects/lunar">Lunar Project</a>
+          <a href="/projects/golden-dome">Golden Dome</a>
+        </section>
+        <section>
+          <h2>Resources</h2>
+          <a href="/topics">Topic guides</a>
+          <a href="/insights">Insights</a>
+          <a href="/glossary">Glossary</a>
+          <a href="/faq">FAQ</a>
+        </section>
+        <section>
+          <h2>Institute</h2>
+          <a href="/about">Governance</a>
+          <a href="/team">Contributors</a>
+          <a href="/join">Join or contact</a>
+          <a href="mailto:contact@celestialgovernance.org">Email CGI</a>
+        </section>
+      </nav>
+      <p class="footer-status">Celestial Governance Institute publishes research and policy analysis on outer space governance. CGI does not claim governmental, treaty-making, regulatory, diplomatic, or quasi-sovereign authority.</p>
+    </div>
+  </footer>
+  <script src="/script.js" defer></script>
   <script type="module" src="/lunar-city.js"></script>
 </body>
 </html>

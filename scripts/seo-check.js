@@ -11,6 +11,7 @@ const pages = [
   ["/research", "research.html"],
   ["/projects/ostgap", "projects/ostgap.html"],
   ["/projects/lunar", "projects/lunar.html"],
+  ["/projects/golden-dome", "projects/golden-dome.html"],
   ["/publications/ostgap-report", "publications/ostgap-report.html"],
   ["/topics", "topics.html"],
   ["/topics/outer-space-governance", "topics/outer-space-governance.html"],
@@ -34,16 +35,19 @@ const pages = [
 ];
 
 const forbiddenTerms = [
+  ["Init", "iative"].join(""),
+  ["pro", "gramme"].join(""),
   ["D", "FH"].join(""),
   ["S", "GAC"].join(""),
   ["Democracy", "and", "Federalism", "Hub"].join(" "),
   ["Space", "Generation", "Advisory", "Council"].join(" "),
-  ["dfh", "org", "il"].join("."),
-  ["cgi", ["dfh", "org", "il"].join(".")].join("@")
+  [["d", "f", "h"].join(""), "org", "il"].join("."),
+  ["cgi", [["d", "f", "h"].join(""), "org", "il"].join(".")].join("@")
 ];
 
 const breadcrumbRoutes = new Set(pages.map(([route]) => route).filter((route) => route.split("/").filter(Boolean).length > 1));
 const articleRoutes = new Set([
+  "/projects/golden-dome",
   "/publications/ostgap-report",
   "/insights/what-is-outer-space-governance",
   "/insights/outer-space-treaty-gaps",
@@ -55,7 +59,7 @@ const requiredSharedMeta = [
   ["og:locale", "<meta property=\"og:locale\" content=\"en_US\">"] ,
   ["og:image", "<meta property=\"og:image\" content=\"" + socialImage + "\">"] ,
   ["twitter:image", "<meta name=\"twitter:image\" content=\"" + socialImage + "\">"] ,
-  ["theme-color", "<meta name=\"theme-color\" content=\"#050505\">"]
+  ["theme-color", "<meta name=\"theme-color\" content=\"#061b42\">"]
 ];
 
 const failures = [];

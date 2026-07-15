@@ -6,6 +6,7 @@ const pages = [
   "/research",
   "/projects/ostgap",
   "/projects/lunar",
+  "/projects/golden-dome",
   "/publications/ostgap-report",
   "/topics",
   "/topics/outer-space-governance",

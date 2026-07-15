@@ -5,6 +5,7 @@
   const year = document.querySelector("[data-year]");
   const form = document.querySelector("#application-form");
   const status = document.querySelector("#form-status");
+  const themedSections = Array.from(document.querySelectorAll("[data-scroll-theme]"));
 
   if (year) {
     year.textContent = new Date().getFullYear();
@@ -29,6 +30,32 @@
       const shift = Math.max(Math.min(rect.top * -0.04, 28), -28);
       image.style.transform = `translate3d(0, ${shift}px, 0) scale(1.04)`;
     });
+    document.querySelectorAll(".hero-media img, .orbital-field, .security-orbit-field, .section-watermark").forEach((layer) => {
+      const rect = layer.getBoundingClientRect();
+      const shift = Math.max(Math.min(rect.top * -0.025, 34), -34);
+      layer.style.transform = `translate3d(0, ${shift}px, 0)`;
+    });
+  }
+
+  function setScrollTheme(theme) {
+    const nextTheme = theme || "paper";
+    document.body.dataset.scrollTheme = nextTheme;
+    if (header) header.dataset.scrollTheme = nextTheme;
+  }
+
+  if (themedSections.length && "IntersectionObserver" in window) {
+    const themeObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setScrollTheme(visible.target.dataset.scrollTheme);
+    }, { threshold: [0.22, 0.42, 0.62], rootMargin: "-18% 0px -46% 0px" });
+
+    themedSections.forEach((section) => themeObserver.observe(section));
+    const current = themedSections.find((section) => section.getBoundingClientRect().top <= window.innerHeight * 0.45 && section.getBoundingClientRect().bottom > window.innerHeight * 0.2);
+    setScrollTheme(current ? current.dataset.scrollTheme : themedSections[0].dataset.scrollTheme);
+  } else {
+    setScrollTheme("paper");
   }
 
   setHeaderState();
@@ -133,6 +160,50 @@
           const isVisible = value === "all" || item.dataset.libraryItem === value;
           item.hidden = !isVisible;
         });
+      });
+    });
+  }
+
+  const missionControl = document.querySelector("[data-lunar-mission-control]");
+  if (missionControl) {
+    const modes = {
+      rover: {
+        mode: "Rover traverse",
+        signal: "8.4 s delay",
+        power: "72%",
+        risk: "Dust corridor review"
+      },
+      base: {
+        mode: "Base systems",
+        signal: "Nominal relay",
+        power: "91%",
+        risk: "Thermal margin watch"
+      },
+      governance: {
+        mode: "Governance queue",
+        signal: "Notice logged",
+        power: "N/A",
+        risk: "Landing-zone deconfliction"
+      }
+    };
+    const fields = {
+      mode: missionControl.querySelector("[data-mission-mode]"),
+      signal: missionControl.querySelector("[data-mission-signal]"),
+      power: missionControl.querySelector("[data-mission-power]"),
+      risk: missionControl.querySelector("[data-mission-risk]")
+    };
+    missionControl.querySelectorAll("[data-mode]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const state = modes[button.dataset.mode] || modes.rover;
+        missionControl.querySelectorAll("[data-mode]").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        Object.entries(fields).forEach(([key, field]) => {
+          if (field) field.textContent = state[key];
+        });
+        missionControl.dataset.activeMode = button.dataset.mode;
       });
     });
   }

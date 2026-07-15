@@ -1,10 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Celestial Governance Institute logo</title>
-  <desc id="desc">A gold orbital mark surrounding a central governance star.</desc>
-  <rect width="128" height="128" rx="24" fill="#050505"/>
-  <circle cx="64" cy="64" r="34" fill="none" stroke="#C9A227" stroke-width="4"/>
-  <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#C9A227" stroke-width="3" transform="rotate(-24 64 64)"/>
-  <ellipse cx="64" cy="64" rx="52" ry="19" fill="none" stroke="#F4F1E8" stroke-opacity=".62" stroke-width="2" transform="rotate(24 64 64)"/>
-  <path fill="#C9A227" d="M64 36l6.8 19.6L91 64l-20.2 8.4L64 92l-6.8-19.6L37 64l20.2-8.4L64 36z"/>
-  <circle cx="96" cy="44" r="5" fill="#F4F1E8"/>
+  <title id="title">Celestial Governance Institute mark</title>
+  <desc id="desc">A deep navy institutional celestial seal with crossing orbital arcs and a central point.</desc>
+  <g fill="none" stroke="#061b42" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="64" cy="55" r="45" stroke-width="5"/>
+    <path d="M20 54c4 33 25 53 44 53s40-20 44-53" stroke-width="5"/>
+    <path d="M23 83c20-30 47-45 82-33" stroke-width="4"/>
+    <path d="M105 83c-20-30-47-45-82-33" stroke-width="4"/>
+    <path d="M64 36c-1 23-10 42-31 61" stroke-width="5"/>
+    <path d="M64 36c1 23 10 42 31 61" stroke-width="5"/>
+  </g>
+  <circle cx="64" cy="30" r="7" fill="#061b42"/>
 </svg>

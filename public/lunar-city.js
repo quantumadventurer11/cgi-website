@@ -152,6 +152,7 @@ if (viewer && canvas) {
   const gltfLoader = new GLTFLoader();
   const cityAssetPromises = {};
   let isVisible = true;
+  let hasRenderedOnce = false;
   let needsRender = true;
   let frameHandle = 0;
 
@@ -161,7 +162,7 @@ if (viewer && canvas) {
   }
 
   function scheduleFrame() {
-    if (!isVisible || frameHandle) return;
+    if ((!isVisible && hasRenderedOnce) || frameHandle) return;
     frameHandle = requestAnimationFrame(animate);
   }
 
@@ -577,6 +578,7 @@ if (viewer && canvas) {
 
     if (needsRender || settling || isDragging) {
       renderer.render(scene, camera);
+      hasRenderedOnce = true;
       needsRender = false;
     }
     if (settling || isDragging) scheduleFrame();
