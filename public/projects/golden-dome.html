@@ -60,6 +60,25 @@
           <h2>A system-of-systems legal inquiry.</h2>
           <p>Golden Dome is being studied as a system-of-systems rather than a single weapon. Public materials describe an architecture involving sensors, command-and-control, and terrestrial and space-based interception capabilities.</p>
           <p>The Institute is examining international space law, the law governing the use of force, the law of armed conflict, state responsibility, liability, orbital sustainability, and strategic stability. The intended output is a public legal and policy report.</p>
+          <figure class="golden-architecture-diagram" aria-labelledby="architecture-title">
+            <figcaption id="architecture-title">System-of-systems structure</figcaption>
+            <div class="architecture-flow" aria-label="Sensors to command and control to interception">
+              <div class="architecture-node">
+                <span class="architecture-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"></circle><path d="M4 12a8 8 0 0 1 16 0"></path><path d="M7 12a5 5 0 0 1 10 0"></path></svg></span>
+                <strong>Sensors</strong>
+              </div>
+              <span class="architecture-arrow" aria-hidden="true"></span>
+              <div class="architecture-node">
+                <span class="architecture-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="5" y="5" width="14" height="14" rx="2"></rect><path d="M9 9h6v6H9z"></path><path d="M12 2v3"></path><path d="M12 19v3"></path><path d="M2 12h3"></path><path d="M19 12h3"></path></svg></span>
+                <strong>Command and control</strong>
+              </div>
+              <span class="architecture-arrow" aria-hidden="true"></span>
+              <div class="architecture-node">
+                <span class="architecture-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l7 18-7-4-7 4 7-18z"></path><path d="M12 3v14"></path></svg></span>
+                <strong>Interception</strong>
+              </div>
+            </div>
+          </figure>
         </article>
         <aside class="project-status-panel" id="project-status" aria-label="Golden Dome project status">
           <h2>Project status</h2>
@@ -116,7 +135,7 @@
         <p class="section-kicker">Preliminary legal propositions</p>
         <h2>Questions for analysis, not final Institute conclusions.</h2>
       </div>
-      <div class="project-card-grid proposition-grid">
+      <div class="golden-proposition-list">
         <article><span>01</span><p>The Outer Space Treaty does not impose a blanket prohibition on every conventional weapon placed in Earth orbit.</p></article>
         <article><span>02</span><p>Article IV expressly prohibits nuclear weapons and other weapons of mass destruction in orbit, while broader restrictions apply to the Moon and other celestial bodies.</p></article>
         <article><span>03</span><p>A defensive label does not determine legal status.</p></article>
@@ -132,20 +151,20 @@
         <p class="section-kicker">Frameworks</p>
         <h2>Lifecycle, capability, and scenario analysis.</h2>
       </div>
-      <div class="project-card-grid">
-        <article><h3>Research and development</h3><p>Distinguishes concept development, legal characterization, procurement signals, and technology readiness from deployment or use.</p></article>
-        <article><h3>Deployment</h3><p>Examines basing mode, orbital sustainability, registration, liability, command arrangements, and strategic signaling.</p></article>
-        <article><h3>Testing</h3><p>Assesses debris, interference, notification, target characterization, and environmental risk.</p></article>
-        <article><h3>Peacetime operation</h3><p>Reviews due regard, supervision, dual-use ambiguity, proximity behavior, and civilian dependency risk.</p></article>
-        <article><h3>Crisis and armed conflict</h3><p>Connects capability effects to the UN Charter, law of armed conflict, self-defense, attribution, and escalation dynamics.</p></article>
+      <div class="project-card-grid golden-analysis-grid">
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 19h16"></path><path d="M6 19V7l6-3 6 3v12"></path><path d="M9 11h6"></path></svg></span><h3>Research and development</h3><p>Distinguishes concept development, legal characterization, procurement signals, and technology readiness from deployment or use.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8"></circle><path d="M12 4v16"></path><path d="M4 12h16"></path></svg></span><h3>Deployment</h3><p>Examines basing mode, orbital sustainability, registration, liability, command arrangements, and strategic signaling.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3v18"></path><path d="M5 10l7-7 7 7"></path><path d="M7 21h10"></path></svg></span><h3>Testing</h3><p>Assesses debris, interference, notification, target characterization, and environmental risk.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 12h16"></path><path d="M12 4v16"></path><circle cx="12" cy="12" r="3"></circle></svg></span><h3>Peacetime operation</h3><p>Reviews due regard, supervision, dual-use ambiguity, proximity behavior, and civilian dependency risk.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"></path><path d="M9 12l2 2 4-5"></path></svg></span><h3>Crisis and armed conflict</h3><p>Connects capability effects to the UN Charter, law of armed conflict, self-defense, attribution, and escalation dynamics.</p></article>
       </div>
-      <div class="project-card-grid compact-grid">
-        <article><h3>Detection and tracking</h3><p>Space-based sensing, cueing, data fusion, and dual-use surveillance implications.</p></article>
-        <article><h3>Physical interception</h3><p>Kinetic interceptors, debris effects, target status, and proportionality questions.</p></article>
-        <article><h3>Directed energy and electronic effects</h3><p>Reversible interference, damage thresholds, attribution, and warning.</p></article>
-        <article><h3>Co-orbital and proximity systems</h3><p>Inspection, servicing, rendezvous, and counterspace ambiguity.</p></article>
-        <article><h3>Decision and control architecture</h3><p>Autonomy, command authority, escalation control, and accountability.</p></article>
-        <article><h3>Stability and offensive potential</h3><p>How defensive architecture may produce offensive or destabilizing incentives.</p></article>
+      <div class="project-card-grid compact-grid golden-analysis-grid">
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"></circle><path d="M4 12a8 8 0 0 1 16 0"></path><path d="M7 12a5 5 0 0 1 10 0"></path></svg></span><h3>Detection and tracking</h3><p>Space-based sensing, cueing, data fusion, and dual-use surveillance implications.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3l7 18-7-4-7 4 7-18z"></path><path d="M12 3v14"></path></svg></span><h3>Physical interception</h3><p>Kinetic interceptors, debris effects, target status, and proportionality questions.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M13 2L5 14h6l-1 8 8-12h-6l1-8z"></path></svg></span><h3>Directed energy and electronic effects</h3><p>Reversible interference, damage thresholds, attribution, and warning.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="8" cy="12" r="3"></circle><circle cx="16" cy="12" r="3"></circle><path d="M11 12h2"></path><path d="M4 4l16 16"></path></svg></span><h3>Co-orbital and proximity systems</h3><p>Inspection, servicing, rendezvous, and counterspace ambiguity.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M8 9h8"></path><path d="M8 15h5"></path><path d="M12 4v16"></path></svg></span><h3>Decision and control architecture</h3><p>Autonomy, command authority, escalation control, and accountability.</p></article>
+        <article><span class="gd-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4 18V6"></path><path d="M20 18V6"></path><path d="M8 12h8"></path><path d="M12 8v8"></path></svg></span><h3>Stability and offensive potential</h3><p>How defensive architecture may produce offensive or destabilizing incentives.</p></article>
       </div>
       <div class="project-scenario-strip" aria-label="Scenario analysis">
         <span>Space-based sensing only</span>
@@ -176,8 +195,8 @@
         <p class="section-kicker">Publication roadmap</p>
         <h2>From source framework to final report.</h2>
       </div>
-      <ol class="project-roadmap-list">
-        <li><span>01</span><strong>Research scope and source framework</strong></li>
+      <ol class="project-roadmap-list golden-roadmap-stepper">
+        <li aria-current="step"><span>01</span><strong>Research scope and source framework</strong></li>
         <li><span>02</span><strong>Public background primer</strong></li>
         <li><span>03</span><strong>Working paper for expert review</strong></li>
         <li><span>04</span><strong>Legal, technical, and strategic consultation</strong></li>

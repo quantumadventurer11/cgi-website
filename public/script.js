@@ -10,6 +10,45 @@
   const lightLogoSrc = "/assets/cgi-logo-mark-transparent.png";
   const darkLogoSrc = "/assets/cgi-logo-mark-ivory.svg";
 
+  if (header) {
+    const navShell = header.querySelector(".nav-shell");
+    const navLinks = header.querySelector(".nav-links");
+    if (navShell && navLinks && !header.querySelector(".mobile-nav-toggle")) {
+      const toggle = document.createElement("button");
+      const navId = navLinks.id || "primary-navigation";
+      navLinks.id = navId;
+      toggle.type = "button";
+      toggle.className = "mobile-nav-toggle";
+      toggle.setAttribute("aria-label", "Open navigation menu");
+      toggle.setAttribute("aria-controls", navId);
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.innerHTML = "<span></span>";
+      navShell.insertBefore(toggle, navLinks);
+
+      function setNavOpen(isOpen) {
+        header.classList.toggle("is-nav-open", isOpen);
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        toggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+      }
+
+      toggle.addEventListener("click", () => {
+        setNavOpen(!header.classList.contains("is-nav-open"));
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setNavOpen(false));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setNavOpen(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.matchMedia("(min-width: 860px)").matches) setNavOpen(false);
+      });
+    }
+  }
+
   if (year) {
     year.textContent = new Date().getFullYear();
   }
