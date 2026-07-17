@@ -159,6 +159,7 @@ img.brand-mark {
   align-items: center;
   justify-content: center;
   min-height: 44px;
+  min-width: max-content;
   padding: 0.8rem 1.15rem;
   border: 1px solid var(--color-gold);
   border-radius: var(--radius-sm);
@@ -4400,6 +4401,8 @@ body[data-scroll-theme="lunar"] {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.2vw, 1.75rem);
   font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
   line-height: 1.08;
 }
 
@@ -5256,17 +5259,31 @@ body.golden-dome-page .project-method-section .typology-grid .research-card p {
 }
 
 .project-participation {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--space-5);
   align-items: center;
-  justify-content: space-between;
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: clamp(1.2rem, 2vw, 1.7rem);
+  border: 1px solid var(--cgi-line);
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(6, 27, 66, 0.06);
 }
 
 .project-participation h2,
 .project-participation p {
   max-width: 760px;
+}
+
+.project-participation h2 {
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+}
+
+.project-participation .button {
+  min-width: 11rem;
+  padding-right: 1.25rem;
+  padding-left: 1.25rem;
 }
 
 .project-related .related-research-grid a {
@@ -5870,5 +5887,125 @@ body .site-header[data-scroll-theme="lunar"] .nav-links a.nav-cta {
   .golden-roadmap-stepper li[aria-current="step"] strong::after {
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+/* Glanceable project-page simplification pass. */
+.project-page .project-glance-section,
+.project-page .project-compact-section,
+.research-index-page .research-library-section {
+  padding-top: clamp(3rem, 5vw, 4.5rem) !important;
+  padding-bottom: clamp(3rem, 5vw, 4.5rem) !important;
+}
+
+.project-page .section-heading {
+  max-width: 760px;
+  margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.project-page .section-heading h2,
+.research-index-page .section-heading h2 {
+  font-size: clamp(1.7rem, 3vw, 2.55rem);
+}
+
+.project-page .project-card-grid article,
+.project-page .project-facts-grid article,
+.project-page .known-unknown-grid article,
+.project-page .project-evidence-grid article,
+.research-index-page .research-card,
+.pathway-summary-grid article {
+  padding: clamp(0.95rem, 1.8vw, 1.2rem);
+}
+
+.project-page .project-card-grid h3,
+.project-page .project-facts-grid h3,
+.project-page .known-unknown-grid h3,
+.research-index-page .research-card h3,
+.pathway-summary-grid h3 {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+}
+
+.project-page .project-card-grid p,
+.project-page .project-facts-grid p,
+.project-page .known-unknown-grid li,
+.project-page .project-evidence-grid p,
+.research-index-page .research-card p,
+.pathway-summary-grid p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.project-quick-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-quick-list li {
+  padding-left: 1rem;
+  color: var(--cgi-navy);
+  border-left: 3px solid var(--project-accent);
+  font-weight: 700;
+}
+
+.project-page .project-status-panel {
+  padding: clamp(0.95rem, 1.8vw, 1.25rem);
+}
+
+.project-page .project-status-panel dl {
+  gap: 0.75rem;
+}
+
+.project-page .source-list a {
+  min-height: 52px;
+}
+
+.project-page .related-research-grid a {
+  min-height: 0;
+}
+
+.project-page .project-related .related-research-grid p {
+  display: none;
+}
+
+.project-page .project-publication-notice {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+.ostgap-page .project-workstreams .project-card-grid,
+.lunar-project-page .project-workstreams .project-card-grid,
+.research-index-page .priority-card-grid,
+.pathway-summary-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.lunar-project-page .lunar-admin-identity p,
+.lunar-project-page .mission-control-section .source-panel p,
+.lunar-project-page .project-method .section-heading p {
+  max-width: 62ch;
+}
+
+@media (max-width: 980px) {
+  .project-participation {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .project-participation .button {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 760px) {
+  .project-participation .button,
+  .hero-actions .button {
+    width: 100%;
+  }
+
+  .nav-links a.nav-cta {
+    min-width: 100%;
   }
 }
