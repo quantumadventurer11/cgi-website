@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Celestial Governance Institute ivory mark</title>
+  <desc id="desc">An ivory institutional celestial seal with crossing orbital arcs and a central point for dark backgrounds.</desc>
+  <g fill="none" stroke="#fffdf8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="64" cy="55" r="45" stroke-width="5"/>
+    <path d="M20 54c4 33 25 53 44 53s40-20 44-53" stroke-width="5"/>
+    <path d="M23 83c20-30 47-45 82-33" stroke-width="4"/>
+    <path d="M105 83c-20-30-47-45-82-33" stroke-width="4"/>
+    <path d="M64 36c-1 23-10 42-31 61" stroke-width="5"/>
+    <path d="M64 36c1 23 10 42 31 61" stroke-width="5"/>
+  </g>
+  <circle cx="64" cy="30" r="7" fill="#fffdf8"/>
+</svg>

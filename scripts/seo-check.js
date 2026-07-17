@@ -46,8 +46,13 @@ const forbiddenTerms = [
 ];
 
 const breadcrumbRoutes = new Set(pages.map(([route]) => route).filter((route) => route.split("/").filter(Boolean).length > 1));
+const projectRoutes = new Set([
+  "/projects/ostgap",
+  "/projects/lunar",
+  "/projects/golden-dome"
+]);
+
 const articleRoutes = new Set([
-  "/projects/golden-dome",
   "/publications/ostgap-report",
   "/insights/what-is-outer-space-governance",
   "/insights/outer-space-treaty-gaps",
@@ -90,6 +95,7 @@ for (const [route, filePath] of pages) {
   for (const [name, markup] of requiredSharedMeta) if (!html.includes(markup)) failures.push(route + ": missing " + name);
   if (!/<a\s+[^>]*href="\/[^"]*"/i.test(html)) failures.push(route + ": missing crawlable internal link");
   if (breadcrumbRoutes.has(route) && !html.includes("\"@type\":\"BreadcrumbList\"") && !html.includes("\"@type\": \"BreadcrumbList\"")) failures.push(route + ": missing BreadcrumbList JSON-LD");
+  if (projectRoutes.has(route) && !html.includes("\"@type\":\"ResearchProject\"") && !html.includes("\"@type\": \"ResearchProject\"")) failures.push(route + ": missing ResearchProject JSON-LD");
   if (articleRoutes.has(route) && !html.includes("\"@type\":\"Article\"") && !html.includes("\"@type\": \"Article\"")) failures.push(route + ": missing Article JSON-LD");
   for (const term of forbiddenTerms) if (html.includes(term)) failures.push(route + ": forbidden legacy term " + term);
 }

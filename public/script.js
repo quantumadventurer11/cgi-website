@@ -6,6 +6,9 @@
   const form = document.querySelector("#application-form");
   const status = document.querySelector("#form-status");
   const themedSections = Array.from(document.querySelectorAll("[data-scroll-theme]"));
+  const headerLogo = header ? header.querySelector(".brand-mark") : null;
+  const lightLogoSrc = "/assets/cgi-logo-mark-transparent.png";
+  const darkLogoSrc = "/assets/cgi-logo-mark-ivory.svg";
 
   if (year) {
     year.textContent = new Date().getFullYear();
@@ -41,6 +44,11 @@
     const nextTheme = theme || "paper";
     document.body.dataset.scrollTheme = nextTheme;
     if (header) header.dataset.scrollTheme = nextTheme;
+    if (headerLogo) {
+      const useDarkLogo = nextTheme === "navy" || nextTheme === "security" || nextTheme === "lunar";
+      const nextSrc = useDarkLogo ? darkLogoSrc : lightLogoSrc;
+      if (!headerLogo.src.endsWith(nextSrc)) headerLogo.src = nextSrc;
+    }
   }
 
   if (themedSections.length && "IntersectionObserver" in window) {
@@ -157,9 +165,71 @@
         const value = filter.dataset.filter;
         filters.forEach((button) => button.classList.toggle("is-active", button === filter));
         items.forEach((item) => {
-          const isVisible = value === "all" || item.dataset.libraryItem === value;
+          const tags = String(item.dataset.libraryItem || "").split(/\s+/);
+          const isVisible = value === "all" || tags.includes(value);
           item.hidden = !isVisible;
         });
+      });
+    });
+  }
+
+  const pathwayExplorer = document.querySelector("[data-research-pathways]");
+  if (pathwayExplorer) {
+    const pathways = {
+      treaty: {
+        label: "OSTGAP",
+        title: "Outer Space Treaty implementation gaps",
+        copy: "Start with treaty obligations, national implementation, and the gaps that matter for Articles II, VI, and IX.",
+        primaryText: "Open OSTGAP",
+        primaryHref: "/projects/ostgap",
+        secondaryText: "Read topic guide",
+        secondaryHref: "/topics/outer-space-treaty-gaps"
+      },
+      lunar: {
+        label: "Lunar Project",
+        title: "Governance before routine lunar activity",
+        copy: "Explore administration, landing zones, safety, infrastructure access, science protection, and dispute intake through a scenario model.",
+        primaryText: "Explore Lunar Project",
+        primaryHref: "/projects/lunar",
+        secondaryText: "Lunar governance guide",
+        secondaryHref: "/topics/lunar-governance"
+      },
+      security: {
+        label: "Golden Dome",
+        title: "Space security law and interceptor characterization",
+        copy: "Review CGI's public-safe legal questions around kinetic, directed-energy, co-orbital, and non-kinetic capability categories.",
+        primaryText: "View legal preview",
+        primaryHref: "/projects/golden-dome",
+        secondaryText: "Related treaty work",
+        secondaryHref: "/projects/ostgap"
+      }
+    };
+    const fields = {
+      label: pathwayExplorer.querySelector("[data-pathway-label]"),
+      title: pathwayExplorer.querySelector("[data-pathway-title]"),
+      copy: pathwayExplorer.querySelector("[data-pathway-copy]"),
+      primary: pathwayExplorer.querySelector("[data-pathway-primary]"),
+      secondary: pathwayExplorer.querySelector("[data-pathway-secondary]")
+    };
+    pathwayExplorer.querySelectorAll("[data-pathway]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const state = pathways[button.dataset.pathway] || pathways.treaty;
+        pathwayExplorer.querySelectorAll("[data-pathway]").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        if (fields.label) fields.label.textContent = state.label;
+        if (fields.title) fields.title.textContent = state.title;
+        if (fields.copy) fields.copy.textContent = state.copy;
+        if (fields.primary) {
+          fields.primary.textContent = state.primaryText;
+          fields.primary.href = state.primaryHref;
+        }
+        if (fields.secondary) {
+          fields.secondary.textContent = state.secondaryText;
+          fields.secondary.href = state.secondaryHref;
+        }
       });
     });
   }
@@ -171,26 +241,34 @@
         mode: "Rover traverse",
         signal: "8.4 s delay",
         power: "72%",
-        risk: "Dust corridor review"
+        risk: "Dust corridor review",
+        governance: "Route notice and dust buffer",
+        action: "Publish traverse window"
       },
       base: {
         mode: "Base systems",
         signal: "Nominal relay",
         power: "91%",
-        risk: "Thermal margin watch"
+        risk: "Thermal margin watch",
+        governance: "Shared power priority",
+        action: "Confirm emergency reserve"
       },
       governance: {
         mode: "Governance queue",
         signal: "Notice logged",
         power: "N/A",
-        risk: "Landing-zone deconfliction"
+        risk: "Landing-zone deconfliction",
+        governance: "Consultation threshold",
+        action: "Route dispute intake"
       }
     };
     const fields = {
       mode: missionControl.querySelector("[data-mission-mode]"),
       signal: missionControl.querySelector("[data-mission-signal]"),
       power: missionControl.querySelector("[data-mission-power]"),
-      risk: missionControl.querySelector("[data-mission-risk]")
+      risk: missionControl.querySelector("[data-mission-risk]"),
+      governance: missionControl.querySelector("[data-mission-governance]"),
+      action: missionControl.querySelector("[data-mission-action]")
     };
     missionControl.querySelectorAll("[data-mode]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -203,7 +281,68 @@
         Object.entries(fields).forEach(([key, field]) => {
           if (field) field.textContent = state[key];
         });
+        missionControl.querySelectorAll(".telemetry-board article").forEach((card, index) => {
+          card.style.setProperty("--telemetry-delay", `${index * 45}ms`);
+          card.classList.remove("is-updated");
+          window.requestAnimationFrame(() => card.classList.add("is-updated"));
+        });
         missionControl.dataset.activeMode = button.dataset.mode;
+        const section = missionControl.closest(".mission-control-section");
+        if (section) section.dataset.activeMode = button.dataset.mode;
+      });
+    });
+  }
+
+  const legalMatrix = document.querySelector("[data-legal-matrix]");
+  if (legalMatrix) {
+    const states = {
+      kinetic: {
+        label: "Kinetic",
+        title: "Hit-to-kill systems",
+        copy: "Research questions include debris creation, target characterization, testing conditions, proportionality, and harmful interference risk.",
+        treaty: "Article IX due regard and harmful interference consultation.",
+        posture: "Analytic category only; no conclusion about any specific architecture."
+      },
+      energy: {
+        label: "Energy-based",
+        title: "Directed-energy capabilities",
+        copy: "Research questions include reversibility, dazzling or damage thresholds, attribution, warning, and escalation dynamics.",
+        treaty: "Article III links to applicable international law and UN Charter analysis.",
+        posture: "Capability category for legal characterization, not operational endorsement."
+      },
+      dual: {
+        label: "Co-orbital",
+        title: "Dual-use proximity operations",
+        copy: "Research questions include inspection, servicing, rendezvous, command authority, evidence, and the line between benign and counterspace uses.",
+        treaty: "Articles VI and IX supervision, responsibility, due regard, and consultation.",
+        posture: "Public preview separates dual-use ambiguity from adopted conclusions."
+      },
+      nonkinetic: {
+        label: "Non-kinetic",
+        title: "Non-kinetic and offensive-overmatch effects",
+        copy: "Research questions include interference, degradation, cyber-adjacent effects, reversibility, attribution, and strategic characterization.",
+        treaty: "Articles III, IV, and IX depending on effect, target, and context.",
+        posture: "Source language is treated as a starting point for analysis, not proof of system design."
+      }
+    };
+    const fields = {
+      label: legalMatrix.querySelector("[data-matrix-label]"),
+      title: legalMatrix.querySelector("[data-matrix-title]"),
+      copy: legalMatrix.querySelector("[data-matrix-copy]"),
+      treaty: legalMatrix.querySelector("[data-matrix-treaty]"),
+      posture: legalMatrix.querySelector("[data-matrix-posture]")
+    };
+    legalMatrix.querySelectorAll("[data-matrix]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const state = states[button.dataset.matrix] || states.kinetic;
+        legalMatrix.querySelectorAll("[data-matrix]").forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", active ? "true" : "false");
+        });
+        Object.entries(fields).forEach(([key, field]) => {
+          if (field) field.textContent = state[key];
+        });
       });
     });
   }

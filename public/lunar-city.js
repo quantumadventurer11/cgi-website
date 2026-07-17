@@ -564,7 +564,7 @@ if (viewer && canvas) {
 
   function animate() {
     frameHandle = 0;
-    if (!isVisible) return;
+    if (!isVisible && hasRenderedOnce) return;
     moonGroup.rotation.y += (targetRotation - moonGroup.rotation.y) * 0.025;
     camera.position.lerp(cameraTarget, 0.035);
     camera.lookAt(focusTarget);
